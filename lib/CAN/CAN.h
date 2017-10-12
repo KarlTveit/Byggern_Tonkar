@@ -9,7 +9,23 @@
 #ifndef CAN_H_
 #define CAN_H_
 
+#include "../MCP2515/MCP2515.h"
+//#include "../OLED/fonts.h"
+typedef struct {
+	unsigned int id;
+	uint8_t length;
+	uint8_t data[8];
+}can_message_t;
 
+
+
+void CAN_init(void);
+void CAN_message_send(can_message_t *message);
+void CAN_error();
+void CAN_transmit_complete();
+can_message_t CAN_data_recieve();
+void CAN_int_vect();
+void CAN_print_message(can_message_t message);
 
 
 

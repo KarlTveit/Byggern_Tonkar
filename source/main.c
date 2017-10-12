@@ -66,13 +66,43 @@ int main(void)
 	OLED_goto_column(0);
 	
 	
+	CAN_init();
+	can_message_t m;
+	m.id = 3;
+	m.length = 5;
+	m.data[5] = (uint8_t) 'HELLO';
+	CAN_message_send(&m);
+	
+	//_delay_ms(10);
+	
+	CAN_print_message(CAN_data_recieve());
+	
+	
+	
+	
+	
+	//MCP2515_init();
+	
+	/*while(1) {
+		MCP2515_read_status();
+		_delay_ms(10);
+	}*/
+	while(1);
+	
+
 	SPI_init();
-	printf("Etter OLED \n");
+
+	
+	
+	
 	while(1) {
+		//printf("Her er jeg \n");
+		//_delay_ms(100);
+		SPI_send(0b01000001);
 		_delay_ms(100);
-		SPI_read(0b01010101);
-		printf("Her er jeg \n");
-		//SPI_send(0b00000001);
+		printf("reading %d\n",SPI_read());
+		
+		
 	}
 	
 	

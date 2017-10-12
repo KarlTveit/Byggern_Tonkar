@@ -73,7 +73,7 @@ void OLED_clear_display(void){
 	current_line = 0;
 	
 	OLED_goto_line(0);
-	printf("Done clearing\r\n");
+	//printf("Done clearing\r\n");
 
 }		
 

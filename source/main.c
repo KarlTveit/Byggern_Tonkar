@@ -69,13 +69,13 @@ int main(void)
 	CAN_init();
 	can_message_t m;
 	m.id = 3;
-	m.length = 5;
-	m.data[5] = (uint8_t) 'HELLO';
-	CAN_message_send(&m);
+	m.length = 1;
+	m.data[0] = (uint8_t) 'H';
+	CAN_send_message(&m);
 	
 	//_delay_ms(10);
 	
-	CAN_print_message(CAN_data_recieve());
+	CAN_print_message(CAN_recieve_data());
 	
 	
 	

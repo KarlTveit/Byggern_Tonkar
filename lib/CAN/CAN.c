@@ -15,7 +15,7 @@ void CAN_init(void){
 }
 
 
-void CAN_message_send(can_message_t *message){
+void CAN_send_message(can_message_t *message){
 	
 	if (!(MCP_TXB0CTRL & (1<<MCP_RTS_TX0))) {
 		//placing message id into SID 0:7
@@ -45,7 +45,7 @@ void CAN_transmit_complete(){
 	
 	
 }
-can_message_t CAN_data_recieve(){
+can_message_t CAN_recieve_data(){
 	
 	can_message_t message;
 	memset(&message, 0, sizeof(can_message_t));
@@ -79,7 +79,7 @@ void CAN_print_message(can_message_t message) {
 	
 	for (uint8_t i = 0; i < message.length; i++) {
 			
-		printf("%d", message.data[i]);
+		printf("%c", message.data[i]);
 	}
 	
 	printf("\n");

@@ -1,5 +1,8 @@
 #include "UART.h"
 
+
+
+
 int UART_Init(unsigned int ubrr) {
 	// Set baud rate
 	UBRR0H = (unsigned char)(ubrr>>8);
@@ -7,7 +10,14 @@ int UART_Init(unsigned int ubrr) {
 	// Enable receiver and transmitter
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	// Set frame format: 8data, 2 stop bit
-	UCSR0A &= ~(_BV(U2X0));
+	
+	#ifdef __AVR_ATmega162__
+		UCSR0A &= ~(_BV(U2X0));
+	#elif __AVR_ATmega2560__
+		UCSR0C = (1<<USBS)|(3<<UCSZ0);
+	#endif
+	
+	
 	
 	
 	cli();

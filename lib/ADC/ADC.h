@@ -10,12 +10,16 @@
 
 
 
-#include <avr/io.h>
+
 //#include "IncFile1.h"
 #include "stdio.h"
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
+
+#include "../UART/UART.h"
+
+
 typedef enum{
 	joyY = 0x4,
 	joyX = 0x5,

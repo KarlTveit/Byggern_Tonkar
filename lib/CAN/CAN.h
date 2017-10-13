@@ -10,6 +10,7 @@
 #define CAN_H_
 
 #include "../MCP2515/MCP2515.h"
+#include <avr/io.h>
 //#include "../OLED/fonts.h"
 typedef struct {
 	unsigned int id;
@@ -20,10 +21,10 @@ typedef struct {
 
 
 void CAN_init(void);
-void CAN_message_send(can_message_t *message);
+void CAN_send_message(can_message_t *message);
 void CAN_error();
 void CAN_transmit_complete();
-can_message_t CAN_data_recieve();
+can_message_t CAN_recieve_data();
 void CAN_int_vect();
 void CAN_print_message(can_message_t message);
 

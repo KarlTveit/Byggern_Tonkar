@@ -8,9 +8,10 @@
 
 #ifndef JOYSTICK_H_
 #define JOYSTICK_H_
-
+#define JOY_POS_ID 100
 
 #include "../ADC/ADC.h"
+#include "../CAN/CAN.h"
 #include <string.h>
 #include <util/delay.h>
 

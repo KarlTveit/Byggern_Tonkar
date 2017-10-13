@@ -12,10 +12,19 @@
 
 void SPI_init() {
 	
+	#ifdef __AVR_ATmega162__
 	DDRB |= (1<<DDB7);						//SCK
 	DDRB |= (1<<DDB5);						//MOSI
 	DDRB |= (1<<DDB4);						//SS
 	DDRB &= ~(1<<DDB6);						//MISO
+	
+	#elif __AVR_ATmega2560__
+	DDRB |= (1<<DDB1);						//SCK
+	DDRB |= (1<<DDB2);						//MOSI
+	DDRB |= (1<<DDB0);						//SS
+	DDRB &= ~(1<<DDB3);						//MISO
+	
+	#endif
 	
 	
 	SPCR &= ~(1<<DORD);						//MSB of data word transmitted first

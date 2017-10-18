@@ -37,6 +37,7 @@ void OLED_emphasized_inverted_string(char c[]);
 
 
 
-void OLED_print_rocket();
+//void OLED_print_rocket();
+void OLED_func();
 
 #endif /* OLED_H_ */

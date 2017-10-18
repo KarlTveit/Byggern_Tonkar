@@ -14,7 +14,7 @@ int UART_Init(unsigned int ubrr) {
 	#ifdef __AVR_ATmega162__
 		UCSR0A &= ~(_BV(U2X0));
 	#elif __AVR_ATmega2560__
-		UCSR0C = (1<<USBS)|(3<<UCSZ0);
+		UCSR0C = (1<<USBS0)|(3<<UCSZ00);
 	#endif
 	
 	

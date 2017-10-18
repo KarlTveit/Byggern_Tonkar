@@ -43,8 +43,9 @@ JOY_position_t JOY_getPosition(void) {
 	can_message_t* message;
 	message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
 	message->length = 2;
-	message->data[0] = pos.X;
-	message->data[1] = pos.Y;
+	message->data[0] = ADC_read(joyX);
+	message->data[1] = ADC_read(joyY);
+	
 	CAN_send_message(message);
 	
 	return pos;

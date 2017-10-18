@@ -9,7 +9,7 @@
 void CAN_init(void){
 	
 	MCP2515_init();
-	MCP2515_bit_modify(MCP_CANCTRL,0b11100000, MODE_LOOPBACK);
+	MCP2515_bit_modify(MCP_CANCTRL,0b11100000, MODE_NORMAL);
 	
 	
 }

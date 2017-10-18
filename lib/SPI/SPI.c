@@ -21,7 +21,7 @@ void SPI_init() {
 	#elif __AVR_ATmega2560__
 	DDRB |= (1<<DDB1);						//SCK
 	DDRB |= (1<<DDB2);						//MOSI
-	DDRB |= (1<<DDB0);						//SS
+	DDRB |= (1<<DDB7);						//SS
 	DDRB &= ~(1<<DDB3);						//MISO
 	
 	#endif

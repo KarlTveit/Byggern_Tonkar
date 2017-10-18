@@ -9,11 +9,18 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
+
 void init_SRAM(void){
+	
+	#ifdef __AVR_ATmega162__
 	// enable external reset, s. --- i datablad atmega162
 	MCUCR |= (1 << SRE);
+	
+	
 	// mask pins, s. 32 i datablad atmega162
 	SFIOR |= (1 << XMM2);
+	#endif
+	
 }
 
 void SRAM_test(void)

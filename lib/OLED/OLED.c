@@ -2,6 +2,8 @@
 
 #include "OLED.h"
 #include "fonts.h"
+#include "..\JOY\JOY.h"
+#include "..\MENU\MENU.h"
 
 
 static uint8_t current_line = 0;
@@ -244,6 +246,7 @@ void OLED_emphasized_inverted_string(char c[]) {
 }
 
 
+/*
 
 
 void OLED_print_rocket() {
@@ -311,9 +314,9 @@ void OLED_print_rocket() {
 	*ext_oled_data = 0b00000011;
 	*ext_oled_data = 0b00000001;
 	
-	
+	JOY_direction_t dir = JOY_getDirection();
 	//Stjernestøv
-	for (uint8_t k = 0; k < 1000; k++ ) {
+	while (dir != left)  {
 		for(uint8_t j = 3; j <=5 ; j++) {
 			OLED_goto_line(j);
 			for(uint8_t i = 0; i< 50; i++) {
@@ -322,7 +325,15 @@ void OLED_print_rocket() {
 			
 		}
 		_delay_ms(200);
+		dir = JOY_getDirection();
+		
 	}
+	MENU_back();
 	
-	
+}
+*/
+
+
+void OLED_func() {
+	OLED_print_string("cooool string");
 }

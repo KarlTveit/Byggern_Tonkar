@@ -5,7 +5,11 @@
  *  Author: karlmt
  */ 
 
-#define F_CPU 4915200 // clock frequency in Hz
+#ifdef __AVR_ATmega162__
+	#define F_CPU 4915200UL // clock frequency in Hz
+#elif __AVR_ATmega2560__
+	#define F_CPU 16000000UL  // clock frequency in Hz
+#endif
 #define BAUD 9600
 #define UBRR F_CPU/16/BAUD-1
 
@@ -51,6 +55,7 @@ ISR(USART0_RXC_vect)
 
 int main(void)
 {
+	
 	_delay_ms(10);
 
 	DDRA = 0xFF;
@@ -58,26 +63,36 @@ int main(void)
 	UART_Init(UBRR);
 	fdevopen(&UART_Transmit, &UART_Recieve);
 	init_SRAM();
+	CAN_init();
+	JOY_init();
+	_delay_ms(100);
+	
+	while(1){
+		
+		JOY_position_t p = JOY_getPosition();
+		printf("(%d,%d)", p.X,p.Y);
+	}
 	
 	
-	OLED_init();
+	/*OLED_init();
 	OLED_clear_display();
 	OLED_goto_line(0);
-	OLED_goto_column(0);
-	
-	
+	OLED_goto_column(0);*/
+/*
+	MENU_create();
+	MENU_run_menu();*/
+
 	CAN_init();
 	can_message_t m;
 	m.id = 3;
 	m.length = 1;
 	m.data[0] = (uint8_t) 'H';
+
 	CAN_send_message(&m);
-	
-	//_delay_ms(10);
-	
-	CAN_print_message(CAN_recieve_data());
-	
-	
+	_delay_ms(300);
+	//CAN_print_message(CAN_recieve_data());
+
+
 	
 	
 	
@@ -115,119 +130,10 @@ int main(void)
 	*/
 	
 	
-	static menu_t main_menu;
-	static menu_t current_menu;
-	
-	//Initializing Main Menu
-	main_menu.title = "Main Menu";
-	main_menu.number_of_submenus = 0;
-	main_menu.item = NULL_PTR;
-	main_menu.parent = NULL_PTR;
-	main_menu.submenus = malloc(sizeof(menu_t)*5);
-	
-	
-	static uint8_t current_line = 0; // første linje er linjen under tittel
-	static JOY_direction_t last_direction = neutral; 
-	
-	static unsigned int quit = 0;	//bool
 	
 	
 	
-		
-	menu_t* settings_m = MENU_add_submenu("Settings", NULL_PTR, &main_menu);
-	menu_t* tonja_m = MENU_add_submenu("Tonja", NULL_PTR, &main_menu);
-	menu_t* karl_m = MENU_add_submenu("Karl", NULL_PTR, &main_menu);
 	
-	
-	menu_t* lillagenser_m = MENU_add_submenu("Lilla genser", NULL_PTR, tonja_m);
-	menu_t* ocd_m = MENU_add_submenu("ocd", NULL_PTR, tonja_m);
-	menu_t* regnbue_m = MENU_add_submenu("Regnbue", NULL_PTR, tonja_m);
-	
-	menu_t* kul_m = MENU_add_submenu("Kul", NULL_PTR, karl_m);
-	menu_t* svartbukse_m = MENU_add_submenu("Svart bukse", NULL_PTR, lillagenser_m);
-	//printf("first submenu is %s\n", main_menu.submenus[0]->title);
-		
-	current_menu = main_menu;
-	
-	//main_menu.number_of_submenus = 3;
-	
-	
-	MENU_display_menu(main_menu,0);
-	while(!quit) {
-		
-		
-		JOY_direction_t dir = JOY_getDirection();
-		
-		/*printf("dir: ");
-		JOY_getDirectionString();
-		printf("\n");*/
-		menu_t choice = *current_menu.submenus[current_line];		
-		
-		 
-		
-			switch (dir) {	
-			
-				case up:
-					
-					if (current_line > 0 && last_direction == neutral) {
-						current_line--;
-						MENU_display_menu(current_menu, current_line);
-					}
-					last_direction = dir;
-					_delay_ms(100);
-					break;
-				
-				case down:
-					printf("menus %d\n",current_menu.number_of_submenus);
-					if ((current_line < (current_menu.number_of_submenus-1)) && last_direction == neutral) {
-						current_line++;
-						printf("current line = %d\n", current_line);
-						
-						MENU_display_menu(current_menu, current_line);
-					}
-					last_direction = dir;
-					_delay_ms(100);
-					break;
-			
-				case right:
-					if (last_direction == neutral) {
-						MENU_choose(choice);
-						current_menu = choice;
-						current_line = 0;
-						MENU_display_menu(current_menu, current_line);
-						
-					}
-					last_direction = dir;
-					_delay_ms(100);
-					break;
-				
-				case left:	
-					if(last_direction == neutral){
-					MENU_back(current_menu);
-						if (current_menu.parent != NULL_PTR) {
-							current_menu = *current_menu.parent;
-						}
-						else {
-							quit = 1;
-						}
-						current_line = 0;
-					}
-					
-					last_direction = dir;
-					_delay_ms(100);
-					break;
-					
-				case neutral:
-					last_direction = dir;
-					_delay_ms(100);
-					break;
-			}
-		
-		
-		
-		
-		
-	}
 	
 		
 	

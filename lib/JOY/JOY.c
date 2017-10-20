@@ -6,7 +6,7 @@
  */ 
 
 #include "JOY.h"
-
+#include "../CAN/CAN.h"
 //correction values
 static int8_t corr_x = 0; 
 static int8_t corr_y = 0;

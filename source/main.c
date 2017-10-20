@@ -67,12 +67,13 @@ int main(void)
 	JOY_init();
 	_delay_ms(100);
 	
+/*
 	while(1){
 		
 		JOY_position_t p = JOY_getPosition();
 		printf("(%d,%d)", p.X,p.Y);
 	}
-	
+	*/
 	
 	/*OLED_init();
 	OLED_clear_display();
@@ -84,87 +85,60 @@ int main(void)
 
 	CAN_init();
 	can_message_t m;
-	m.id = 3;
-	m.length = 1;
-	m.data[0] = (uint8_t) 'H';
+	
+	m.length = 2;
+	m.id = 166;
+	m.data[0] = 'H';
+	m.data[1] = 'A';
+	while(1){
+	CAN_send_message(&m);
+	
+	_delay_ms(300);
+	}
+	can_message_t m2 = CAN_recieve_data();
+	printf("ID: %d\n", m2.id);
+	printf("Data: %d\n", m2.data[0]);
+	CAN_print_message(m2);
+/*
+	can_message_t message;
+	message.id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
+	message.length = 2;
+	
+	
+	
+		_delay_ms(100);
+		message.data[0] = ADC_read(joyX);
+		message.data[1] = ADC_read(joyY);
+		CAN_send_message(&message);
+		can_message_t joy = CAN_recieve_data();
+		CAN_print_message(joy);
+	*/
+	
+	/*
+	can_message_t m;
+	
+	m.length = 2;
+	m.id = 100;
+	m.data[0] = ADC_read(joyX);
+	m.data[1] = ADC_read(joyY);
 
 	CAN_send_message(&m);
+	
 	_delay_ms(300);
-	//CAN_print_message(CAN_recieve_data());
-
-
+	can_message_t m2 = CAN_recieve_data();
+	printf("ID: %d\n", m2.id);
+	printf("ADC_read(joyX) = %d \ndata[0]: %d\n",ADC_read(joyX), m2.data[0]);
+	CAN_print_message(m2);
 	
 	
-	
+	*/
 	//MCP2515_init();
 	
 	/*while(1) {
 		MCP2515_read_status();
 		_delay_ms(10);
 	}*/
-	while(1);
-	
-
-	SPI_init();
-
-	
-	
-	
-	while(1) {
-		//printf("Her er jeg \n");
-		//_delay_ms(100);
-		SPI_send(0b01000001);
-		_delay_ms(100);
-		printf("reading %d\n",SPI_read());
-		
-		
-	}
-	
-	
-	
-	/*
-	************************
-			M E N U 
-			
-	************************
-	*/
-	
-	
-	
-	
-	
-	
-	
-		
-	
-	
-	
-	
-	
-
 
 	
 
-
-
-
-
-
-
-
-	JOY_init();
-	while(1) {
-		//JOY_calibrate();	//DENNE KLIKKER HJELP HVA SKJER
-		/*_delay_ms(1000);
-		printf("(%d,%d)\n", ADC_read(joyX),ADC_read(joyY));
-		printf("(%d,%d)\n", JOY_getPosition().X,JOY_getPosition().Y);
-		
-		JOY_getDirectionString();*/
-		
-		
-		//OLED_test();
-		//printf("(%d)\n", ADC_read(joyX));	
-	}
-
- 
 }

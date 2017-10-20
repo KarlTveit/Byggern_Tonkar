@@ -20,7 +20,7 @@ uint8_t MCP2515_init() {
 	_delay_ms(1);
 
 	//test
-	MCP2515_read(MCP_CANSTAT);
+	val = MCP2515_read(MCP_CANSTAT);
 	if((val & MODE_MASK) != MODE_CONFIG) {
 		printf("MCP2515 in NOT in configuration mode after reset!\n");
 		return 1;
@@ -60,22 +60,7 @@ void MCP2515_request_to_send(uint8_t buffer){
 	
 	SPI_enable_chipselect();
 	
-	switch (buffer) {
-		case 0:
-			SPI_send(MCP_RTS_TX0);
-			break;
-		
-		case 1:
-			SPI_send(MCP_RTS_TX1);
-			break;
-		
-		case 2:
-			SPI_send(MCP_RTS_TX2);
-			break;
-		
-		default:
-			SPI_send(MCP_RTS_ALL);
-	}
+	SPI_send(buffer);
 	
 	
 	SPI_disable_chipselect();
@@ -101,6 +86,7 @@ void MCP2515_bit_modify(uint8_t addr, uint8_t maskbyte, uint8_t databyte){
 	SPI_enable_chipselect();
 	
 	SPI_send(MCP_BITMOD);
+	SPI_send(addr);
 	SPI_send(maskbyte);
 	SPI_send(databyte);
 	

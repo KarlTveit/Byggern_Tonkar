@@ -13,7 +13,9 @@ v1.00       2003/12/11  Initial release
 Copyright 2003 Kimberly Otten Software Consulting
 */
 
-// Define MCP2515 register addresses
+
+
+//Define MCP2515 register addresses
 
 #define MCP_RXF0SIDH	0x00
 #define MCP_RXF0SIDL	0x01
@@ -66,9 +68,12 @@ Copyright 2003 Kimberly Otten Software Consulting
 
 #define MCP_TXB0DLC		0x35		//Transmit buffer 0 for data length code
 #define MCP_TXB0D0		0x36		//Start address for data register
+#define MCP_RXB0DLC		0x65
+#define MCP_RXB0D0		0x66
 
 #define MCP_RXB0CTRL	0x60
 #define MCP_RXB0SIDH	0x61
+#define MCP_RXB0SIDL	0x62
 #define MCP_RXB1CTRL	0x70
 #define MCP_RXB1SIDH	0x71
 
@@ -80,6 +85,10 @@ Copyright 2003 Kimberly Otten Software Consulting
 
 #define MCP_TX01_MASK	0x14
 #define MCP_TX_MASK		0x54
+
+#define	MCP_ABTF		0x06
+#define MCP_MLOA		0x05
+#define MCP_TXERR		0x04
 
 // Define SPI Instruction Set
 

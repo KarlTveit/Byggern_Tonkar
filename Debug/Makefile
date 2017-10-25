@@ -38,6 +38,7 @@ SUBDIRS :=  \
 ../lib/JOY/ \
 ../lib/MCP2515/ \
 ../lib/MENU/ \
+../lib/PWM \
 ../lib/OLED/ \
 ../lib/SPI/ \
 ../lib/SRAM/ \
@@ -54,6 +55,7 @@ C_SRCS +=  \
 ../lib/MCP2515/MCP2515.c \
 ../lib/MENU/MENU.c \
 ../lib/OLED/OLED.c \
+../lib/PWM/PWM.c \
 ../lib/SPI/SPI.c \
 ../lib/SRAM/SRAM.c \
 ../lib/UART/UART.c \
@@ -73,6 +75,7 @@ lib/JOY/JOY.o \
 lib/MCP2515/MCP2515.o \
 lib/MENU/MENU.o \
 lib/OLED/OLED.o \
+lib/PWM/PWM.o \
 lib/SPI/SPI.o \
 lib/SRAM/SRAM.o \
 lib/UART/UART.o \
@@ -85,6 +88,7 @@ lib/JOY/JOY.o \
 lib/MCP2515/MCP2515.o \
 lib/MENU/MENU.o \
 lib/OLED/OLED.o \
+lib/PWM/PWM.o \
 lib/SPI/SPI.o \
 lib/SRAM/SRAM.o \
 lib/UART/UART.o \
@@ -97,6 +101,7 @@ lib/JOY/JOY.d \
 lib/MCP2515/MCP2515.d \
 lib/MENU/MENU.d \
 lib/OLED/OLED.d \
+lib/PWM/PWM.d \
 lib/SPI/SPI.d \
 lib/SRAM/SRAM.d \
 lib/UART/UART.d \
@@ -109,6 +114,7 @@ lib/JOY/JOY.d \
 lib/MCP2515/MCP2515.d \
 lib/MENU/MENU.d \
 lib/OLED/OLED.d \
+lib/PWM/PWM.d \
 lib/SPI/SPI.d \
 lib/SRAM/SRAM.d \
 lib/UART/UART.d \
@@ -128,6 +134,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
@@ -185,6 +193,13 @@ lib/MENU/%.o: ../lib/MENU/%.c
 	
 
 lib/OLED/%.o: ../lib/OLED/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+lib/PWM/%.o: ../lib/PWM/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -31,7 +31,7 @@ void CAN_send_message(can_message_t *message){
 		
 // 		MCP2515_bit_modify(MCP_TXB0CTRL, 0b00000011, 0b00000000 );
 // 		//placing message id into SID 0:7
-		printf("Hello\n");
+		//printf("Hello\n");
 		MCP2515_write(message->id>>3, MCP_TXB0SIDH); //SID 3:7
 		MCP2515_write(message->id<<5, MCP_TXB0SIDL); //SID 0:2
 		

@@ -83,15 +83,28 @@ int main(void)
 	MENU_create();
 	MENU_run_menu();*/
 
-	CAN_init();
+
 	can_message_t m;
 	
 	m.length = 2;
-	m.id = 166;
-	m.data[0] = 'H';
-	m.data[1] = 'A';
+	m.id = 169;
+	m.data[0] = 'L';
+	m.data[1] = 'Y';
 	while(1){
-	CAN_send_message(&m);
+		//CAN_send_message(&m);
+		//JOY_getPosition();
+	
+		can_message_t* message;
+		message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
+		message->length = 2;
+		
+		message->data[0] = ADC_read(joyX);
+		message->data[1] = ADC_read(joyY);
+		
+		printf("x = %d, y = %d\n", message->data[0], message->data[1]);
+		
+		CAN_send_message(message);
+		
 	
 	_delay_ms(300);
 	}

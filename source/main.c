@@ -94,17 +94,24 @@ int main(void)
 		//CAN_send_message(&m);
 		//JOY_getPosition();
 	
-		can_message_t* message;
-		message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
-		message->length = 2;
+		can_message_t* joy_message;
+		joy_message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
+		joy_message->length = 2;
 		
-		message->data[0] = ADC_read(joyX);
-		message->data[1] = ADC_read(joyY);
+		joy_message->data[0] = ADC_read(joyX);
+		joy_message->data[1] = ADC_read(joyY);
 		
-		printf("x = %d, y = %d\n", message->data[0], message->data[1]);
+		printf("x = %d, y = %d\n", joy_message->data[0], joy_message->data[1]);
 		
-		CAN_send_message(message);
+		CAN_send_message(joy_message);
 		
+		
+		
+		can_message_t* right_slider_msg;
+		right_slider_msg->id = RIGHT_SLIDER_POS_ID;
+		right_slider_msg->length = 1;
+		right_slider_msg->data[0] = ADC_read(right_slider);
+		CAN_send_message(right_slider_msg);
 	
 	_delay_ms(300);
 	}

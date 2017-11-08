@@ -12,6 +12,13 @@
 #include "../MCP2515/MCP2515.h"
 #include <avr/io.h>
 //#include "../OLED/fonts.h"
+
+//CAN ID's
+
+#define JOY_POS_ID 100
+#define RIGHT_SLIDER_POS_ID 90
+
+
 typedef struct {
 	unsigned int id;
 	uint8_t length;

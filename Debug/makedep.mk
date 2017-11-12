@@ -6,6 +6,8 @@ lib\ADC\ADC.c
 
 lib\CAN\CAN.c
 
+lib\GAME\GAME.c
+
 lib\JOY\JOY.c
 
 lib\MCP2515\MCP2515.c

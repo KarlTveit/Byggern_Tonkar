@@ -10,6 +10,11 @@
 #define JOYSTICK_H_
 
 
+#define RIGHT_BUTTON	0b00000001
+#define LEFT_BUTTON		0b00000010
+#define JOY_BUTTON		0b00000100
+
+
 #include "../ADC/ADC.h"
 #include "../CAN/CAN.h"
 #include <string.h>

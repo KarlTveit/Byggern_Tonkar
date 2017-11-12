@@ -200,7 +200,7 @@ void MENU_create(){
 	
 	
 	
-	
+	menu_t* game_f = MENU_add_submenu("Play", &GAME_play, &main_menu);
 	menu_t* settings_m = MENU_add_submenu("Settings", NULL_PTR, &main_menu);
 	menu_t* tonja_m = MENU_add_submenu("Tonja", NULL_PTR, &main_menu);
 	menu_t* karl_m = MENU_add_submenu("Karl", NULL_PTR, &main_menu);
@@ -225,7 +225,7 @@ void MENU_create(){
 
 void MENU_run_menu(void){
 	MENU_display_menu(main_menu,0);
-		while(!quit) {
+		//while(!quit) {
 		
 		
 			JOY_direction_t dir = JOY_getDirection();
@@ -280,7 +280,7 @@ void MENU_run_menu(void){
 								current_menu = *current_menu.parent;
 							}
 							else {
-								//quit = 1;
+								quit = 1;
 							}
 							current_line = 0;
 						}
@@ -293,7 +293,7 @@ void MENU_run_menu(void){
 						last_direction = dir;
 						_delay_ms(100);
 						break;
-				}
+				//}
 		
 		
 		

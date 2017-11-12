@@ -17,7 +17,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
-
+#include "../GAME/GAME.h"
 
 struct menu_t{
 	char* title;

@@ -1,4 +1,5 @@
-lib/MENU/MENU.d lib/MENU/MENU.o: ../lib/MENU/MENU.c ../lib/MENU/MENU.h \
+lib/GAME/GAME.d lib/GAME/GAME.o: ../lib/GAME/GAME.c ../lib/GAME/GAME.h \
+ ../lib/GAME/../MENU/MENU.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdint.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdint.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h \
@@ -15,23 +16,20 @@ lib/MENU/MENU.d lib/MENU/MENU.o: ../lib/MENU/MENU.c ../lib/MENU/MENU.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\math.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\sleep.h \
- ../lib/MENU/../GAME/GAME.h ../lib/MENU/../GAME/../MENU/MENU.h \
- ../lib/MENU/../GAME/../CAN/CAN.h \
- ../lib/MENU/../GAME/../CAN/../MCP2515/MCP2515.h \
- ../lib/MENU/../GAME/../CAN/../MCP2515/../SPI/SPI.h \
- ../lib/MENU/../GAME/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h \
- ../lib/MENU/../GAME/../JOY/JOY.h ../lib/MENU/../GAME/../JOY/../ADC/ADC.h \
+ ../lib/GAME/../MENU/../GAME/GAME.h ../lib/GAME/../CAN/CAN.h \
+ ../lib/GAME/../CAN/../MCP2515/MCP2515.h \
+ ../lib/GAME/../CAN/../MCP2515/../SPI/SPI.h \
+ ../lib/GAME/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h \
+ ../lib/GAME/../JOY/JOY.h ../lib/GAME/../JOY/../ADC/ADC.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
- ../lib/MENU/../GAME/../JOY/../ADC/../UART/UART.h \
- ../lib/MENU/../GAME/../JOY/../CAN/CAN.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h \
- ../lib/MENU/../JOY/JOY.h ../lib/MENU/../OLED/OLED.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../lib/MENU/../OLED/OLED_COMMANDS.h
+ ../lib/GAME/../JOY/../ADC/../UART/UART.h ../lib/GAME/../JOY/../CAN/CAN.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h
 
-../lib/MENU/MENU.h:
+../lib/GAME/GAME.h:
+
+../lib/GAME/../MENU/MENU.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdint.h:
 
@@ -65,21 +63,19 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\sleep.h:
 
-../lib/MENU/../GAME/GAME.h:
+../lib/GAME/../MENU/../GAME/GAME.h:
 
-../lib/MENU/../GAME/../MENU/MENU.h:
+../lib/GAME/../CAN/CAN.h:
 
-../lib/MENU/../GAME/../CAN/CAN.h:
+../lib/GAME/../CAN/../MCP2515/MCP2515.h:
 
-../lib/MENU/../GAME/../CAN/../MCP2515/MCP2515.h:
+../lib/GAME/../CAN/../MCP2515/../SPI/SPI.h:
 
-../lib/MENU/../GAME/../CAN/../MCP2515/../SPI/SPI.h:
+../lib/GAME/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h:
 
-../lib/MENU/../GAME/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h:
+../lib/GAME/../JOY/JOY.h:
 
-../lib/MENU/../GAME/../JOY/JOY.h:
-
-../lib/MENU/../GAME/../JOY/../ADC/ADC.h:
+../lib/GAME/../JOY/../ADC/ADC.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -87,16 +83,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h:
 
-../lib/MENU/../GAME/../JOY/../ADC/../UART/UART.h:
+../lib/GAME/../JOY/../ADC/../UART/UART.h:
 
-../lib/MENU/../GAME/../JOY/../CAN/CAN.h:
+../lib/GAME/../JOY/../CAN/CAN.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h:
-
-../lib/MENU/../JOY/JOY.h:
-
-../lib/MENU/../OLED/OLED.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
-
-../lib/MENU/../OLED/OLED_COMMANDS.h:

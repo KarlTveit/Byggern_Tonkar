@@ -10,7 +10,7 @@
 #include <avr/io.h>
 
 
-void init_SRAM(void){
+void SRAM_init(void){
 	
 	#ifdef __AVR_ATmega162__
 	// enable external reset, s. --- i datablad atmega162

@@ -18,6 +18,13 @@ void JOY_init(){
 	ADC_init();
 	JOY_calibrate();
 	
+	DDRB &= ~(1<<PB0);
+	
+	DDRB &= ~(1<<PB1);
+	
+	DDRB &= ~(1<<PB2);
+	PORTB |= (1<<PB2);
+	
 }
 
 
@@ -40,13 +47,13 @@ JOY_position_t JOY_getPosition(void) {
 	pos.X = (int)((ADC_read(joyX)*0.7874)) + corr_x - 100;
 	pos.Y = (int) ((ADC_read(joyY)*0.7874)) + corr_y - 100;
 	
-	can_message_t* message;
+	/*can_message_t* message;
 	message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
 	message->length = 2;
 	message->data[0] = ADC_read(joyX);
 	message->data[1] = ADC_read(joyY);
 	
-	CAN_send_message(message);
+	CAN_send_message(message);*/
 	
 	return pos;
 }

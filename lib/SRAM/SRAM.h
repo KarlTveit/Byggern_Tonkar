@@ -9,7 +9,7 @@
 #ifndef INCFILE1_H_
 #define INCFILE1_H_
 
-void init_SRAM(void);
+void SRAM_init(void);
 void SRAM_test(void);
 
 

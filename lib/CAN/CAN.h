@@ -31,7 +31,7 @@ void CAN_init(void);
 void CAN_send_message(can_message_t *message);
 void CAN_error();
 void CAN_transmit_complete();
-can_message_t CAN_recieve_data();
+void CAN_recieve_data(can_message_t *message);
 void CAN_int_vect();
 void CAN_print_message(can_message_t message);
 

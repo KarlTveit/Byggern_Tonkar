@@ -32,6 +32,7 @@
 #include "../lib/SPI/SPI.h"
 #include "../lib/MCP2515/MCP2515.h"
 #include "../lib/CAN/CAN.h"
+#include "../lib/PWM/PWM.h"
 
 
 
@@ -62,63 +63,57 @@ int main(void)
 
 	UART_Init(UBRR);
 	fdevopen(&UART_Transmit, &UART_Recieve);
-	init_SRAM();
+	SRAM_init();
 	CAN_init();
 	JOY_init();
 	_delay_ms(100);
+	OLED_init();
+
 	
-/*
-	while(1){
-		
-		JOY_position_t p = JOY_getPosition();
-		printf("(%d,%d)", p.X,p.Y);
-	}
-	*/
-	
-	/*OLED_init();
-	OLED_clear_display();
-	OLED_goto_line(0);
-	OLED_goto_column(0);*/
-/*
 	MENU_create();
-	MENU_run_menu();*/
-
-
-	can_message_t m;
+	MENU_run_menu();
 	
-	m.length = 2;
-	m.id = 169;
-	m.data[0] = 'L';
-	m.data[1] = 'Y';
+	can_message_t node_2_msg;
+	
+	
+	/*printf("heiiii");
 	while(1){
-		//CAN_send_message(&m);
-		//JOY_getPosition();
+		CAN_recieve_data(&node_2_msg);
+		CAN_print_message(node_2_msg);
+		
+	}*/
 	
-		can_message_t* joy_message;
-		joy_message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
-		joy_message->length = 2;
-		
-		joy_message->data[0] = ADC_read(joyX);
-		joy_message->data[1] = ADC_read(joyY);
-		
-		printf("x = %d, y = %d\n", joy_message->data[0], joy_message->data[1]);
-		
-		CAN_send_message(joy_message);
+	while(1){
 		
 		
-		
-		can_message_t* right_slider_msg;
-		right_slider_msg->id = RIGHT_SLIDER_POS_ID;
-		right_slider_msg->length = 1;
-		right_slider_msg->data[0] = ADC_read(right_slider);
-		CAN_send_message(right_slider_msg);
 	
+		
+		MENU_run_menu();
+	
+		can_message_t msg;
+		msg.id = 100;
+		msg.length = 6;
+		
+		msg.data[0] = ADC_read(joyX);
+		msg.data[1] = ADC_read(joyY);
+		msg.data[2] = ADC_read(right_slider);
+		msg.data[3] = PINB & RIGHT_BUTTON;
+		msg.data[4] = PINB & LEFT_BUTTON;
+		msg.data[5] = PINB & JOY_BUTTON;
+		
+		CAN_print_message(msg);
+		printf("\n\n");
+		
+		CAN_send_message(&msg);
+		
+		
 	_delay_ms(300);
 	}
+/*
 	can_message_t m2 = CAN_recieve_data();
 	printf("ID: %d\n", m2.id);
 	printf("Data: %d\n", m2.data[0]);
-	CAN_print_message(m2);
+	CAN_print_message(m2);*/
 /*
 	can_message_t message;
 	message.id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)

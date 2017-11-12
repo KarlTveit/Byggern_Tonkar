@@ -18,7 +18,8 @@ uint8_t MCP2515_init() {
 	
 	MCP2515_reset();
 	_delay_ms(1);
-
+	
+	MCP2515_bit_modify(MCP_CANINTE, 0b00000001, 0b00000001);
 	//test
 	val = MCP2515_read(MCP_CANSTAT);
 	if((val & MODE_MASK) != MODE_CONFIG) {
@@ -58,12 +59,27 @@ uint8_t MCP2515_write(uint8_t val, uint8_t addr){
 
 void MCP2515_request_to_send(uint8_t buffer){
 	
-	SPI_enable_chipselect();
-	
-	SPI_send(buffer);
-	
-	
-	SPI_disable_chipselect();
+		SPI_enable_chipselect();
+		
+		switch (buffer) {
+			case 0:
+			SPI_send(MCP_RTS_TX0);
+			break;
+			
+			case 1:
+			SPI_send(MCP_RTS_TX1);
+			break;
+			
+			case 2:
+			SPI_send(MCP_RTS_TX2);
+			break;
+			
+			default:
+			SPI_send(MCP_RTS_ALL);
+		}
+		
+		
+		SPI_disable_chipselect();
 	
 }
 

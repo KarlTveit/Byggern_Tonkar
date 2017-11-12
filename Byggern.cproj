@@ -145,6 +145,12 @@
     <Compile Include="lib\CAN\CAN.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\GAME\GAME.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\GAME\GAME.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\JOY\JOY.c">
       <SubType>compile</SubType>
     </Compile>
@@ -206,6 +212,7 @@
     <Folder Include="lib\JOY\" />
     <Folder Include="lib\MCP2515\" />
     <Folder Include="lib\MENU\" />
+    <Folder Include="lib\GAME" />
     <Folder Include="lib\PWM" />
     <Folder Include="lib\OLED\" />
     <Folder Include="lib\SPI\" />

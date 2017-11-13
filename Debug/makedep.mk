@@ -6,7 +6,7 @@ lib\ADC\ADC.c
 
 lib\CAN\CAN.c
 
-lib\GAME\GAME.c
+lib\MENU_ITEMS\MENU_ITEMS.c
 
 lib\JOY\JOY.c
 

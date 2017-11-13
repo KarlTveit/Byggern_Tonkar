@@ -183,6 +183,63 @@ void MENU_print_rocket() {
 	
 }
 
+void MENU_play_game(void){
+	
+	can_message_t game_over_msg;	//for reading IR-interrupt
+	
+	
+	
+	can_message_t msg;
+	msg.id = 100;
+	msg.length = 6;
+	
+	
+	clock_t start = clock(), diff;
+	
+	int a = 1;
+	while(a/*!game_over_msg.data[0]*/){
+		
+		
+		CAN_recieve_data(&node_2_msg);
+		
+		
+		
+		msg.data[0] = ADC_read(joyX);
+		msg.data[1] = ADC_read(joyY);
+		msg.data[2] = ADC_read(right_slider);
+		msg.data[3] = PINB & RIGHT_BUTTON;
+		msg.data[4] = PINB & LEFT_BUTTON;
+		msg.data[5] = PINB & JOY_BUTTON;
+		
+		CAN_print_message(msg);
+		printf("\n\n");
+		
+		CAN_send_message(&msg);
+		
+		
+		_delay_ms(5000);
+		a = 0;
+	}
+	uint8_t diff = clock() - start;
+	uint8_t seconds = diff/CLOCKS_PER_SEC;
+	printf("seconds = %d\n\n", seconds);
+	OLED_clear_display();
+	OLED_print_string("GAME OVER");
+	
+	/*MENU_back(current_menu);*/	//necessary? test!
+	
+}
+
+
+
+
+void MENU_highscorelist(void) {
+	
+	
+	
+	
+}
+
 
 
 
@@ -200,18 +257,23 @@ void MENU_create(){
 	
 	
 	
-	menu_t* game_f = MENU_add_submenu("Play", &GAME_play, &main_menu);
+	//menu_t* game_f = MENU_add_submenu("Play game", &GAME_play, &main_menu);
+	
+	menu_t* highscores_m = MENU_add_submenu("Highscores", NULL_PTR, &main_menu);
 	menu_t* settings_m = MENU_add_submenu("Settings", NULL_PTR, &main_menu);
-	menu_t* tonja_m = MENU_add_submenu("Tonja", NULL_PTR, &main_menu);
-	menu_t* karl_m = MENU_add_submenu("Karl", NULL_PTR, &main_menu);
-	menu_t* rocket_f = MENU_add_submenu("Rocket", &MENU_print_rocket, tonja_m);
+	menu_t* playgame_m = MENU_add_submenu("Play game", &MENU_play_game, &main_menu);
 	
-	menu_t* lillagenser_m = MENU_add_submenu("Lilla genser", NULL_PTR, tonja_m);
+	/*menu_t* tonja_m = MENU_add_submenu("Tonja", NULL_PTR, &main_menu);
+	menu_t* karl_m = MENU_add_submenu("Karl", NULL_PTR, &main_menu);*/
+	menu_t* rocket_f = MENU_add_submenu("Rocket", &MENU_print_rocket, &main_menu);
+	
+	
+	/*menu_t* lillagenser_m = MENU_add_submenu("Lilla genser", NULL_PTR, tonja_m);
 	menu_t* ocd_m = MENU_add_submenu("ocd", NULL_PTR, tonja_m);
-	menu_t* regnbue_m = MENU_add_submenu("Regnbue", NULL_PTR, tonja_m);
+	menu_t* regnbue_m = MENU_add_submenu("Regnbue", NULL_PTR, tonja_m);*/
 	
-	menu_t* kul_m = MENU_add_submenu("Kul", NULL_PTR, karl_m);
-	menu_t* svartbukse_m = MENU_add_submenu("Svart bukse", NULL_PTR, lillagenser_m);
+	/*menu_t* kul_m = MENU_add_submenu("Kul", NULL_PTR, karl_m);
+	menu_t* svartbukse_m = MENU_add_submenu("Svart bukse", NULL_PTR, lillagenser_m);*/
 	//printf("first submenu is %s\n", main_menu.submenus[0]->title);
 	
 	current_menu = main_menu;
@@ -224,10 +286,15 @@ void MENU_create(){
 
 
 void MENU_run_menu(void){
+	
 	MENU_display_menu(main_menu,0);
-		//while(!quit) {
-		
-		
+		while(!quit) {
+			JOY_position_t pos = JOY_getPosition();
+			printf("pos.X =  %d\npos.Y =  %d\n\n", pos.X,pos.Y);
+			
+			printf("ADC->X =  %d\nADC->Y =  %d\n\n", ADC_read(joyX),ADC_read(joyY));
+			
+			
 			JOY_direction_t dir = JOY_getDirection();
 		
 			/*printf("dir: ");
@@ -250,7 +317,7 @@ void MENU_run_menu(void){
 						break;
 				
 					case down:
-						printf("menus %d\n",current_menu.number_of_submenus);
+						//printf("menus %d\n",current_menu.number_of_submenus);
 						if ((current_line < (current_menu.number_of_submenus-1)) && last_direction == neutral) {
 							current_line++;
 							printf("current line = %d\n", current_line);
@@ -280,7 +347,7 @@ void MENU_run_menu(void){
 								current_menu = *current_menu.parent;
 							}
 							else {
-								quit = 1;
+								//quit = 1;
 							}
 							current_line = 0;
 						}
@@ -293,7 +360,7 @@ void MENU_run_menu(void){
 						last_direction = dir;
 						_delay_ms(100);
 						break;
-				//}
+				}
 		
 		
 		
@@ -301,3 +368,5 @@ void MENU_run_menu(void){
 		
 		}
 }
+
+

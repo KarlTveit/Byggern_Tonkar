@@ -11,13 +11,15 @@
 
 #define MAX_SUBMENUS 6
 #define NULL_PTR (void*)0
+#define CLOCKS_PER_SEC 1000000
 
 #include "stdint.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
-#include "../GAME/GAME.h"
+/*#include "../GAME/GAME.h"*/
+#include <time.h>
 
 struct menu_t{
 	char* title;

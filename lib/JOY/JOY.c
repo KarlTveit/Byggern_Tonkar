@@ -16,7 +16,7 @@ static int8_t corr_y = 0;
 
 void JOY_init(){
 	ADC_init();
-	JOY_calibrate();
+	//JOY_calibrate();
 	
 	DDRB &= ~(1<<PB0);
 	

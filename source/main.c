@@ -70,18 +70,34 @@ int main(void)
 	OLED_init();
 
 	
+	
+	OLED_clear_display();
+	OLED_goto_line(0);
+	OLED_goto_column(0);
+
 	MENU_create();
 	MENU_run_menu();
+
 	
-	can_message_t node_2_msg;
+	//MENU_create();
+	/*MENU_display_menu();*/
+	//MENU_run_menu();
+	
+	//can_message_t node_2_msg;
 	
 	
-	/*printf("heiiii");
+	printf("heiiii");
 	while(1){
-		CAN_recieve_data(&node_2_msg);
-		CAN_print_message(node_2_msg);
 		
-	}*/
+		//MENU_run_menu();
+		//printf("dir = %c\n", JOY_getDirectionString());
+		/*CAN_recieve_data(&node_2_msg);
+		CAN_print_message(node_2_msg);*/
+		
+	}
+	
+	uint8_t count_right_button = 0;
+	uint8_t	switch_rb =0;
 	
 	while(1){
 		
@@ -94,6 +110,18 @@ int main(void)
 		msg.id = 100;
 		msg.length = 6;
 		
+		/*if (PINB & RIGHT_BUTTON) {
+			count_right_button++;
+		}
+		
+		if (count_right_button == 10) {
+			switch_rb=1;
+			count_right_button = 0;
+		}
+		else{
+			switch_rb=0;
+		}
+		*/
 		msg.data[0] = ADC_read(joyX);
 		msg.data[1] = ADC_read(joyY);
 		msg.data[2] = ADC_read(right_slider);
@@ -107,7 +135,7 @@ int main(void)
 		CAN_send_message(&msg);
 		
 		
-	_delay_ms(300);
+	_delay_ms(100);
 	}
 /*
 	can_message_t m2 = CAN_recieve_data();

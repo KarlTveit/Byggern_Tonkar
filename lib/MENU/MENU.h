@@ -13,13 +13,19 @@
 #define NULL_PTR (void*)0
 #define CLOCKS_PER_SEC 1000000
 
+#define TRUE 1
+#define FALSE 0
+
+#define HIGHSCORES_LENGTH 3
+
 #include "stdint.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
+#include <stdlib.h>
 /*#include "../GAME/GAME.h"*/
-#include <time.h>
+#include "../CAN_DEFINES/CAN_DEFINES.h"
 
 struct menu_t{
 	char* title;
@@ -35,7 +41,12 @@ void MENU_display_menu(menu_t menu, uint8_t curr_line );
 menu_t* MENU_add_submenu(char* t, void(*func)(), /*uint8_t num,*/ /*menu_t** sub,*/ menu_t* p);
 void MENU_back(menu_t this);
 
+menu_t MENU_get_current_menu(void);
+
 void MENU_print_rocket();
+void MENU_print_highscores(void);
+void MENU_update_highscores(uint8_t time);
+uint8_t MENU_get_hichscore_rank(uint8_t time);
 
 void MENU_choose(menu_t choice);
 void MENU_run_menu(void);

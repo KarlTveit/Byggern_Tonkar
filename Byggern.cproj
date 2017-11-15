@@ -145,6 +145,12 @@
     <Compile Include="lib\CAN\CAN.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\CAN_DEFINES\CAN_DEFINES.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\CAN_DEFINES\CAN_DEFINES.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\MENU_ITEMS\MENU_ITEMS.c">
       <SubType>compile</SubType>
     </Compile>
@@ -213,6 +219,7 @@
     <Folder Include="lib\MCP2515\" />
     <Folder Include="lib\MENU\" />
     <Folder Include="lib\MENU_ITEMS" />
+    <Folder Include="lib\CAN_DEFINES" />
     <Folder Include="lib\PWM" />
     <Folder Include="lib\OLED\" />
     <Folder Include="lib\SPI\" />

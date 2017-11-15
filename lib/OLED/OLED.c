@@ -59,14 +59,14 @@ void OLED_init ()
 void OLED_clear_display(void){
 	 
 	 uint8_t c = PAGE0;
-	for(uint8_t p = 0; p<8;p++) {
+	for(uint8_t p = 0; p < number_of_lines;p++) {
  		*ext_oled_cmd = c++;
  		*ext_oled_cmd = FIRST_UPPER_COL;
 		*ext_oled_cmd = FIRST_LOWER_COL;
 	
 	
 
-		for (uint8_t i = 0; i<128; i++) {
+		for (uint8_t i = 0; i< columns_in_line; i++) {
 			*ext_oled_data = CLEAR;
 			/*_delay_ms(10);*/
 		}
@@ -103,9 +103,9 @@ void OLED_goto_column(uint8_t column){		//column = {0,127}
 }
 
 //workin fiiiine
-void OLED_clear_line(line) {
+void OLED_clear_line(uint8_t line) {
 	OLED_goto_line(line);
-	for (uint8_t i = 0; i<128; i++) {
+	for (uint8_t i = 0; i < columns_in_line; i++) {
 		*ext_oled_data = CLEAR;
 		_delay_ms(10);
 	}
@@ -116,21 +116,21 @@ void OLED_pos(uint8_t row/*, uint8_t column*/){
 }
 
 void OLED_print_char(char c){
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < font5_size; i++) {
 		*ext_oled_data = pgm_read_byte(&(font5[c - ASCII_OFFSET][i]));
 	}
 
 }
 
 void OLED_print_capital_char(char c){
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < font5_size; i++) {
 		*ext_oled_data = pgm_read_byte(&(font5[c - ASCII_OFFSET - CAPITAL_LETTER_OFFSET][i]));
 	}
 
 }
 
 void OLED_print_inverted_char(char c){
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < font5_size; i++) {
 		*ext_oled_data = ~pgm_read_byte(&((font5[c - ASCII_OFFSET][i])));
 	}
 
@@ -151,12 +151,12 @@ void OLED_print_string(char c[]){
 	
 	uint8_t str_index = 0;
 	uint8_t line_index = 0;
-	OLED_goto_column(64-((strlen(c)*5)/2));
+	OLED_goto_column(64-((strlen(c)*font5_size)/2));
 	while (c[str_index] != '\0') {
 		line_index++;
 		
 		OLED_print_char(c[str_index++]);
-		if (line_index > 122/5) {
+		if (line_index > 122/font5_size) {
 			line_index = 0;
 			OLED_goto_line(++current_line);
 			
@@ -181,7 +181,7 @@ void OLED_print_header(char c[]){
 		else {
 			OLED_print_char(c[str_index++]);
 		}
-		if (line_index > 122/5) {
+		if (line_index > 122/font5_size) {
 			line_index = 0;
 			OLED_goto_line(++current_line);
 			
@@ -195,7 +195,7 @@ void OLED_print_header(char c[]){
 
 void OLED_print_inverted_string(char c[]) {
 	
-	for (uint8_t i = 0; i<128; i++) {
+	for (uint8_t i = 0; i < columns_in_line; i++) {
 		*ext_oled_data = FILL;
 	
 	}
@@ -203,13 +203,13 @@ void OLED_print_inverted_string(char c[]) {
 	
 	uint8_t str_index = 0;
 	uint8_t line_index = 0;
-	uint8_t start_index_centralized = 64-((strlen(c)*5)/2);
+	uint8_t start_index_centralized = 64-((strlen(c)*font5_size)/2);
 	OLED_goto_column(start_index_centralized);
 	while (c[str_index] != '\0') {
 		line_index++;
 		OLED_print_inverted_char(c[str_index++]);
 		
-		if (line_index > 122/5) {
+		if (line_index > 122/font5_size) {
 			line_index = 0;
 			OLED_goto_line(++current_line);
 			
@@ -221,7 +221,7 @@ void OLED_print_inverted_string(char c[]) {
 
 //LA TIL DENNE
 void OLED_emphasized_inverted_string(char c[]) {
-	for (uint8_t i = 0; i<128; i++) {
+	for (uint8_t i = 0; i < columns_in_line; i++) {
 		*ext_oled_data = FILL;
 		_delay_ms(10);
 	}
@@ -229,13 +229,13 @@ void OLED_emphasized_inverted_string(char c[]) {
 	
 	uint8_t str_index = 0;
 	uint8_t line_index = 0;
-	uint8_t start_index_centralized = 64-((strlen(c)*5)/2);
+	uint8_t start_index_centralized = 64-((strlen(c)*font5_size)/2);
 	OLED_goto_column(start_index_centralized);
 	while (c[str_index] != '\0') {
 		line_index++;
 		OLED_print_emphasized_inverted_char(c[str_index++]);
 		
-		if (line_index > 122/5) {
+		if (line_index > 122/font5_size) {
 			line_index = 0;
 			OLED_goto_line(++current_line);
 			

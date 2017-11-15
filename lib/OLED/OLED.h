@@ -11,6 +11,11 @@
 #define ext_oled_cmd    ((volatile char*) 0x1000)
 #define ext_oled_data ((volatile char*) 0x1200)
 
+#define font5_size 5
+#define columns_in_line 128
+#define number_of_lines 8
+
+
 void OLED_test(void);
 void OLED_clear_display(void);
 void OLED_init(void);
@@ -18,7 +23,7 @@ void OLED_reset(void);
 void OLED_home();
 void OLED_goto_line(uint8_t line);
 void OLED_goto_column(uint8_t column);
-void OLED_clear_line(line);
+void OLED_clear_line(uint8_t line);
 void OLED_pos(uint8_t row/*,uint8_t column*/);
 
 
@@ -28,7 +33,7 @@ void OLED_print_inverted_char(char c);
 void OLED_print_emphasized_inverted_char(char c);
 
 
-void OLED_set_brightness(lvl);
+void OLED_set_brightness(uint8_t lvl);
 
 void OLED_print_string(char c[]);
 void OLED_print_header(char c[]);

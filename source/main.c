@@ -33,6 +33,7 @@
 #include "../lib/MCP2515/MCP2515.h"
 #include "../lib/CAN/CAN.h"
 #include "../lib/PWM/PWM.h"
+#include "../lib/CAN_DEFINES/CAN_DEFINES.h"
 
 
 
@@ -76,7 +77,9 @@ int main(void)
 	OLED_goto_column(0);
 
 	MENU_create();
+	
 	MENU_run_menu();
+	//MENU_run_menu();
 
 	
 	//MENU_create();
@@ -87,28 +90,43 @@ int main(void)
 	
 	
 	printf("heiiii");
+/*
 	while(1){
 		
 		//MENU_run_menu();
 		//printf("dir = %c\n", JOY_getDirectionString());
-		/*CAN_recieve_data(&node_2_msg);
-		CAN_print_message(node_2_msg);*/
+		/ *CAN_recieve_data(&node_2_msg);
+		CAN_print_message(node_2_msg);* /
 		
-	}
+	}*/
 	
-	uint8_t count_right_button = 0;
-	uint8_t	switch_rb =0;
+	/*uint8_t count_right_button = 0;
+	uint8_t	switch_rb =0;*/
+	
+	
+/*
+	while (1)
+	{
+		can_message_t receive_msg;
+		printf("before receive \n\n");
+		//_delay_ms(1);
+		CAN_recieve_data(&receive_msg);
+		CAN_print_message(receive_msg);
+		printf("\n\n");
+		_delay_ms(150);
+	}*/
+	
 	
 	while(1){
 		
 		
 	
 		
-		MENU_run_menu();
+		//MENU_run_menu();
 	
 		can_message_t msg;
 		msg.id = 100;
-		msg.length = 6;
+		msg.length = 7;
 		
 		/*if (PINB & RIGHT_BUTTON) {
 			count_right_button++;
@@ -122,12 +140,18 @@ int main(void)
 			switch_rb=0;
 		}
 		*/
+		
+		uint8_t gameover = FALSE;
+		
+		
 		msg.data[0] = ADC_read(joyX);
 		msg.data[1] = ADC_read(joyY);
 		msg.data[2] = ADC_read(right_slider);
 		msg.data[3] = PINB & RIGHT_BUTTON;
 		msg.data[4] = PINB & LEFT_BUTTON;
 		msg.data[5] = PINB & JOY_BUTTON;
+		msg.data[6] = gameover ? 0:1;
+
 		
 		CAN_print_message(msg);
 		printf("\n\n");

@@ -8,6 +8,7 @@
 
 
 
+/*
 
 void MENU_ITEMS_play(void){
 	
@@ -19,7 +20,7 @@ void MENU_ITEMS_play(void){
 	msg.id = 100;
 	msg.length = 6;
 	
-	while(1/*!game_over_msg.data[0]*/){
+	while(1/ *!game_over_msg.data[0]* /){
 		
 		
 		CAN_recieve_data(&node_2_msg);
@@ -48,4 +49,4 @@ void MENU_ITEMS_play(void){
 	
 	MENU_back(current_menu);
 	
-}
+}*/

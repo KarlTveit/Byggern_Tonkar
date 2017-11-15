@@ -26,10 +26,9 @@ lib/OLED/OLED.d lib/OLED/OLED.o: ../lib/OLED/OLED.c ../lib/OLED/OLED.h \
  ../lib/OLED/..\JOY\../CAN/../MCP2515/../SPI/SPI.h \
  ../lib/OLED/..\JOY\../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h \
- ../lib/OLED/..\MENU\MENU.h ../lib/OLED/..\MENU\../GAME/GAME.h \
- ../lib/OLED/..\MENU\../GAME/../MENU/MENU.h \
- ../lib/OLED/..\MENU\../GAME/../CAN/CAN.h \
- ../lib/OLED/..\MENU\../GAME/../JOY/JOY.h
+ ../lib/OLED/..\MENU\MENU.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
+ ../lib/OLED/..\MENU\../CAN_DEFINES/CAN_DEFINES.h
 
 ../lib/OLED/OLED.h:
 
@@ -95,10 +94,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 ../lib/OLED/..\MENU\MENU.h:
 
-../lib/OLED/..\MENU\../GAME/GAME.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h:
 
-../lib/OLED/..\MENU\../GAME/../MENU/MENU.h:
-
-../lib/OLED/..\MENU\../GAME/../CAN/CAN.h:
-
-../lib/OLED/..\MENU\../GAME/../JOY/JOY.h:
+../lib/OLED/..\MENU\../CAN_DEFINES/CAN_DEFINES.h:

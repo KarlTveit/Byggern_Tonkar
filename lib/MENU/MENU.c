@@ -8,6 +8,8 @@ static uint8_t current_line = 0; // første linje er linjen under tittel
 static JOY_direction_t last_direction = neutral;
 
 static unsigned int quit = 0;	//bool
+
+static uint8_t highscores[HIGHSCORES_LENGTH] = {0};
 	
 
 void MENU_display_menu(menu_t menu, uint8_t curr_line) {
@@ -100,6 +102,11 @@ void MENU_back(menu_t this) {
 }
 
 
+menu_t MENU_get_current_menu(void) {
+	return current_menu;
+}
+
+
 
 void MENU_print_rocket() {
 	
@@ -185,22 +192,24 @@ void MENU_print_rocket() {
 
 void MENU_play_game(void){
 	
-	can_message_t game_over_msg;	//for reading IR-interrupt
+	can_message_t receive_msg;	//for reading IR-interrupt
 	
 	
 	
 	can_message_t msg;
-	msg.id = 100;
-	msg.length = 6;
+	msg.id = GAME_ID;
+	msg.length = 7;
 	
 	
-	clock_t start = clock(), diff;
+/*	clock_t start = clock(), diff;*/
 	
-	int a = 1;
-	while(a/*!game_over_msg.data[0]*/){
+	/*int a = 1;*/
+	uint8_t gameover = FALSE;
+	
+	while(!gameover){
+		printf("---- In MENU_play_game ---- \n\n ");
 		
-		
-		CAN_recieve_data(&node_2_msg);
+		CAN_recieve_data(&receive_msg);
 		
 		
 		
@@ -210,6 +219,7 @@ void MENU_play_game(void){
 		msg.data[3] = PINB & RIGHT_BUTTON;
 		msg.data[4] = PINB & LEFT_BUTTON;
 		msg.data[5] = PINB & JOY_BUTTON;
+		msg.data[7] = gameover ? 0:1;
 		
 		CAN_print_message(msg);
 		printf("\n\n");
@@ -218,13 +228,37 @@ void MENU_play_game(void){
 		
 		
 		_delay_ms(5000);
-		a = 0;
+		
+		/*a = 0;*/
+		CAN_recieve_data(&receive_msg);
+		
+		if (receive_msg.id == GAMEOVER_DATA_ID) {
+			//printf("Game over message received");
+			gameover = TRUE;
+			uint8_t time = msg.data[TIMER_VAL];
+			OLED_clear_display();
+			OLED_print_string("GAME OVER");
+			_delay_ms(10000);
+			
+			MENU_update_highscores(time);
+			
+			if (MENU_get_hichscore_rank(time)) {
+				OLED_clear_display();
+				/*uint8_t rank = MENU_get_hichscore_rank(time);*/
+				OLED_print_string("Congratulations! Your time reached the highscore list. Current rank: ");
+				OLED_print_char(MENU_get_hichscore_rank(time));
+				_delay_ms(3000);
+			}
+		}
+		
 	}
-	uint8_t diff = clock() - start;
+	/*uint8_t diff = clock() - start;
 	uint8_t seconds = diff/CLOCKS_PER_SEC;
-	printf("seconds = %d\n\n", seconds);
+	printf("seconds = %d\n\n", seconds);*/
+/*
 	OLED_clear_display();
 	OLED_print_string("GAME OVER");
+	_delay_ms(3000);*/
 	
 	/*MENU_back(current_menu);*/	//necessary? test!
 	
@@ -233,14 +267,46 @@ void MENU_play_game(void){
 
 
 
-void MENU_highscorelist(void) {
+void MENU_print_highscores(void) {
+	
+	uint8_t page = 0;
+	OLED_clear_display();
+	OLED_print_header("HIGHSCORE LIST");
+	OLED_goto_line(++page);
 	
 	
-	
+	for (uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i+1) {
+		OLED_print_char(i+1);
+		OLED_print_string(". ");
+		OLED_print_string(highscores[i]);
+		OLED_goto_line(++page);
+	} 
 	
 }
 
+void MENU_update_highscores(uint8_t time) {
+	
+	for(uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i + 1) {
+		
+		if (highscores[i] <= time) {
+			for (uint8_t j = HIGHSCORES_LENGTH-1; j > i; j = j-1) {
+				highscores[j] = highscores[j-1];  
+			}
+			
+			highscores[i] = time;
+		
+		}	
+	}
+}
 
+uint8_t MENU_get_hichscore_rank(uint8_t time) {
+	for (uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i+1) {
+		if (highscores[i] == time) {
+			return i;
+		}
+	}
+	return 0;
+}
 
 
 void MENU_create(){
@@ -289,10 +355,11 @@ void MENU_run_menu(void){
 	
 	MENU_display_menu(main_menu,0);
 		while(!quit) {
-			JOY_position_t pos = JOY_getPosition();
-			printf("pos.X =  %d\npos.Y =  %d\n\n", pos.X,pos.Y);
 			
-			printf("ADC->X =  %d\nADC->Y =  %d\n\n", ADC_read(joyX),ADC_read(joyY));
+			JOY_position_t pos = JOY_getPosition();
+			/*printf("pos.X =  %d\npos.Y =  %d\n\n", pos.X,pos.Y);
+			
+			printf("ADC->X =  %d\nADC->Y =  %d\n\n", ADC_read(joyX),ADC_read(joyY));*/
 			
 			
 			JOY_direction_t dir = JOY_getDirection();

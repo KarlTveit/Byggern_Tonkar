@@ -5,6 +5,8 @@
  *  Author: tonjaj
  */ 
 #include "CAN.h"
+#include <util/delay.h>
+#include <stdio.h>
 
 void CAN_init(void){
 	//MCP2515_reset();
@@ -63,7 +65,8 @@ void CAN_recieve_data(can_message_t *message){
 	
 	if(MCP2515_read(MCP_CANINTF) & 1) {
 		//printf("Jeg er i datarecieve__");
-		message->id = 0xff & (MCP2515_read(MCP_RXB0SIDH)<<3 | MCP2515_read(MCP_RXB0SIDL)>>5);
+		_delay_ms(50);
+		message->id = 0x7ff & (MCP2515_read(MCP_RXB0SIDH)<<3 | MCP2515_read(MCP_RXB0SIDL)>>5);
 		message->length = MCP2515_read(MCP_RXB0DLC) & 0b00001111;						//DLC3:0 in TXB0DLC-register
 		
 		for (uint8_t i = 0; i < message->length; i++) {

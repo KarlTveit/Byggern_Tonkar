@@ -5,6 +5,7 @@
  *  Author: karlmt
  */ 
 
+#include <stdlib.h>
 #include "JOY.h"
 #include "../CAN/CAN.h"
 //correction values

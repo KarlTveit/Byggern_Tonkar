@@ -6,9 +6,13 @@
  */ 
 
 #include "SRAM.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <avr/io.h>
 
+#define HIGHSCORE_1_ADDRESS 10
+#define HIGHSCORE_2_ADDRESS 20
+#define HIGHSCORE_3_ADDRESS 30
 
 void SRAM_init(void){
 	
@@ -16,12 +20,42 @@ void SRAM_init(void){
 	// enable external reset, s. --- i datablad atmega162
 	MCUCR |= (1 << SRE);
 	
+	SRAM_write(HIGHSCORE_1_ADDRESS,5);
+	SRAM_write(HIGHSCORE_2_ADDRESS,6);
+	SRAM_write(HIGHSCORE_3_ADDRESS,7);
 	
 	// mask pins, s. 32 i datablad atmega162
 	SFIOR |= (1 << XMM2);
 	#endif
 	
 }
+
+void SRAM_write(uint16_t address, char data){
+	if (address > 0x7FF){ // Out of SRAM domain
+		return;
+	}
+	
+	else{
+		volatile char* external_ram = SRAM_START_ADDRESS;
+		external_ram[address] = data;
+		return;
+	}
+}
+	
+char SRAM_read(uint16_t address){
+	
+	if (address > 0x7FF){ // Out of SRAM domain
+		return 'e';
+	}
+	
+	else{
+		volatile char* external_ram = SRAM_START_ADDRESS;
+		return external_ram[address];
+	
+}
+
+}
+
 
 void SRAM_test(void)
 {

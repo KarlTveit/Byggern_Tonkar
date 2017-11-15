@@ -111,7 +111,7 @@ void OLED_clear_line(uint8_t line) {
 	}
 }
 
-void OLED_pos(uint8_t row/*, uint8_t column*/){
+uint8_t OLED_pos(uint8_t row/*, uint8_t column*/){
 	return current_line;
 }
 
@@ -191,6 +191,22 @@ void OLED_print_header(char c[]){
 	
 	
 }
+
+
+char* OLED_int_to_string(uint8_t integer){
+	uint8_t n;
+	if (integer == 0){
+		n = 1;
+	}
+	else{
+		n = floor(log10(integer)+1);
+	}
+	char result[n+1];
+	itoa(integer,result, 10);
+	return result;
+	
+}
+
 
 
 void OLED_print_inverted_string(char c[]) {

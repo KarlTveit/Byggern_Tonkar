@@ -28,6 +28,7 @@ lib/OLED/OLED.d lib/OLED/OLED.o: ../lib/OLED/OLED.c ../lib/OLED/OLED.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h \
  ../lib/OLED/..\MENU\MENU.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
+ ../lib/OLED/..\MENU\../SRAM/SRAM.h \
  ../lib/OLED/..\MENU\../CAN_DEFINES/CAN_DEFINES.h
 
 ../lib/OLED/OLED.h:
@@ -95,5 +96,7 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 ../lib/OLED/..\MENU\MENU.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h:
+
+../lib/OLED/..\MENU\../SRAM/SRAM.h:
 
 ../lib/OLED/..\MENU\../CAN_DEFINES/CAN_DEFINES.h:

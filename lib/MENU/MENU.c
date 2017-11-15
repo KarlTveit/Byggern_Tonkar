@@ -2,6 +2,7 @@
 #include "MENU.h"
 #include "../JOY/JOY.h"
 #include "../OLED/OLED.h"
+#include "../TIMER/TIMER.h"
 static menu_t main_menu;
 static menu_t current_menu;
 static uint8_t current_line = 0; // første linje er linjen under tittel
@@ -192,6 +193,7 @@ void MENU_print_rocket() {
 
 void MENU_play_game(void){
 	
+	
 	can_message_t receive_msg;	//for reading IR-interrupt
 	
 	
@@ -209,10 +211,6 @@ void MENU_play_game(void){
 	while(!gameover){
 		printf("---- In MENU_play_game ---- \n\n ");
 		
-		CAN_recieve_data(&receive_msg);
-		
-		
-		
 		msg.data[0] = ADC_read(joyX);
 		msg.data[1] = ADC_read(joyY);
 		msg.data[2] = ADC_read(right_slider);
@@ -225,14 +223,18 @@ void MENU_play_game(void){
 		printf("\n\n");
 		
 		CAN_send_message(&msg);
+	
 		
 		
-		_delay_ms(5000);
+		//_delay_ms(5000);
 		
 		/*a = 0;*/
 		CAN_recieve_data(&receive_msg);
+		printf("RECEIVE MESSAGE \n");
+		CAN_print_message(receive_msg);
+		printf("\n\n");
 		
-		if (receive_msg.id == GAMEOVER_DATA_ID) {
+		/*if (receive_msg.id == GAMEOVER_DATA_ID) {
 			//printf("Game over message received");
 			gameover = TRUE;
 			uint8_t time = msg.data[TIMER_VAL];
@@ -244,12 +246,12 @@ void MENU_play_game(void){
 			
 			if (MENU_get_hichscore_rank(time)) {
 				OLED_clear_display();
-				/*uint8_t rank = MENU_get_hichscore_rank(time);*/
+				/ *uint8_t rank = MENU_get_hichscore_rank(time);* /
 				OLED_print_string("Congratulations! Your time reached the highscore list. Current rank: ");
 				OLED_print_char(MENU_get_hichscore_rank(time));
 				_delay_ms(3000);
 			}
-		}
+		}*/
 		
 	}
 	/*uint8_t diff = clock() - start;
@@ -265,30 +267,63 @@ void MENU_play_game(void){
 }
 
 
+void MENU_clear_highscores(void){
+	SRAM_write(HIGHSCORE_1_ADDRESS,0);
+	SRAM_write(HIGHSCORE_2_ADDRESS,0);
+	SRAM_write(HIGHSCORE_3_ADDRESS,0);
+	
+}
+
 
 
 void MENU_print_highscores(void) {
 	
+	highscores[0] = SRAM_read(HIGHSCORE_1_ADDRESS);
+	highscores[1] = SRAM_read(HIGHSCORE_2_ADDRESS);
+	highscores[2] = SRAM_read(HIGHSCORE_3_ADDRESS);
 	uint8_t page = 0;
 	OLED_clear_display();
 	OLED_print_header("HIGHSCORE LIST");
 	OLED_goto_line(++page);
-	
+	/*char* numbers*/
 	
 	for (uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i+1) {
-		OLED_print_char(i+1);
-		OLED_print_string(". ");
-		OLED_print_string(highscores[i]);
+		// OLED_int_to_string(i+1)
+		//OLED_print_char(i+1);
+		//OLED_print_string(". ");
+		uint8_t score = OLED_int_to_string(highscores[i]);
+		printf("higscores: %c\n", score);
+		OLED_print_string(score);
 		OLED_goto_line(++page);
-	} 
 	
+	} 
+	_delay_ms(7000);
 }
 
-void MENU_update_highscores(uint8_t time) {
+uint8_t MENU_update_highscores(uint8_t time) { //Returns the position where you are on the higscore board
 	
-	for(uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i + 1) {
+	uint8_t highscore_1 = SRAM_read(HIGHSCORE_1_ADDRESS);
+	uint8_t highscore_2 = SRAM_read(HIGHSCORE_2_ADDRESS);
+	uint8_t highscore_3 = SRAM_read(HIGHSCORE_3_ADDRESS);
+	
+	
+	/*for(uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i + 1) {*/
 		
-		if (highscores[i] <= time) {
+		if (time > highscore_1){
+			SRAM_write(HIGHSCORE_1_ADDRESS,time);
+			return 1;
+		}
+		else if(time > highscore_2){
+			SRAM_write(HIGHSCORE_2_ADDRESS,time);
+			return 2;
+		}
+		else if(time > highscore_3){
+			SRAM_write(HIGHSCORE_3_ADDRESS,time);
+			return 3;
+		}
+		return 0;
+		
+		/*if (highscores[i] <= time) {
 			for (uint8_t j = HIGHSCORES_LENGTH-1; j > i; j = j-1) {
 				highscores[j] = highscores[j-1];  
 			}
@@ -296,7 +331,7 @@ void MENU_update_highscores(uint8_t time) {
 			highscores[i] = time;
 		
 		}	
-	}
+	}*/
 }
 
 uint8_t MENU_get_hichscore_rank(uint8_t time) {
@@ -308,6 +343,17 @@ uint8_t MENU_get_hichscore_rank(uint8_t time) {
 	return 0;
 }
 
+void MENU_scream_mode (void){
+	DDRB |= (1<<PB3);
+	PORTB &= ~(1<<PB3);
+	
+}
+
+void MENU_normal_mode (void){
+	DDRB |= (1<<PB3);
+	PORTB |=(1<<PB3);
+	
+}
 
 void MENU_create(){
 
@@ -319,20 +365,22 @@ void MENU_create(){
 	main_menu.submenus = malloc(sizeof(menu_t)*5);
 	
 	
-	
+
 	
 	
 	
 	//menu_t* game_f = MENU_add_submenu("Play game", &GAME_play, &main_menu);
-	
-	menu_t* highscores_m = MENU_add_submenu("Highscores", NULL_PTR, &main_menu);
-	menu_t* settings_m = MENU_add_submenu("Settings", NULL_PTR, &main_menu);
 	menu_t* playgame_m = MENU_add_submenu("Play game", &MENU_play_game, &main_menu);
+	menu_t* highscores_m = MENU_add_submenu("Highscores", &MENU_print_highscores, &main_menu);
+	menu_t* settings_m = MENU_add_submenu("Settings", NULL_PTR, &main_menu);
+	
 	
 	/*menu_t* tonja_m = MENU_add_submenu("Tonja", NULL_PTR, &main_menu);
 	menu_t* karl_m = MENU_add_submenu("Karl", NULL_PTR, &main_menu);*/
 	menu_t* rocket_f = MENU_add_submenu("Rocket", &MENU_print_rocket, &main_menu);
-	
+	//menu_t* clear_highscores_f = MENU_add_submenu("Cl", &MENU_clear_highscores, settings_m);
+	menu_t* scream_mode_f = MENU_add_submenu("Scream Mode", &MENU_scream_mode, settings_m);
+	menu_t* normal_mode_f = MENU_add_submenu("Normal Mode", &MENU_normal_mode, settings_m);
 	
 	/*menu_t* lillagenser_m = MENU_add_submenu("Lilla genser", NULL_PTR, tonja_m);
 	menu_t* ocd_m = MENU_add_submenu("ocd", NULL_PTR, tonja_m);

@@ -7,6 +7,7 @@
 
 
 #include "MCP2515.h"
+#include <stdio.h>
 #include <stdint.h>
 #include <util/delay.h>
 

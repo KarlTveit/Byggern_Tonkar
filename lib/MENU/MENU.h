@@ -15,7 +15,9 @@
 
 #define TRUE 1
 #define FALSE 0
-
+#define HIGHSCORE_1_ADDRESS 10
+#define HIGHSCORE_2_ADDRESS 20
+#define HIGHSCORE_3_ADDRESS 30 
 #define HIGHSCORES_LENGTH 3
 
 #include "stdint.h"
@@ -24,6 +26,7 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <stdlib.h>
+#include "../SRAM/SRAM.h"
 /*#include "../GAME/GAME.h"*/
 #include "../CAN_DEFINES/CAN_DEFINES.h"
 
@@ -43,10 +46,15 @@ void MENU_back(menu_t this);
 
 menu_t MENU_get_current_menu(void);
 
+void MENU_play_game(void);
 void MENU_print_rocket();
+void MENU_clear_highscores(void);
 void MENU_print_highscores(void);
-void MENU_update_highscores(uint8_t time);
+uint8_t MENU_update_highscores(uint8_t time);
 uint8_t MENU_get_hichscore_rank(uint8_t time);
+
+void MENU_scream_mode (void);
+void MENU_normal_mode (void);
 
 void MENU_choose(menu_t choice);
 void MENU_run_menu(void);

@@ -4,12 +4,13 @@
  * Created: 30.08.2017 10:04:34
  *  Author: karlmt
  */ 
+/*
 
 #ifdef __AVR_ATmega162__
 	#define F_CPU 4915200UL // clock frequency in Hz
 #elif __AVR_ATmega2560__
 	#define F_CPU 16000000UL  // clock frequency in Hz
-#endif
+#endif*/
 #define BAUD 9600
 #define UBRR F_CPU/16/BAUD-1
 
@@ -34,6 +35,7 @@
 #include "../lib/CAN/CAN.h"
 #include "../lib/PWM/PWM.h"
 #include "../lib/CAN_DEFINES/CAN_DEFINES.h"
+#include "../lib/TIMER/TIMER.h"
 
 
 
@@ -116,7 +118,7 @@ int main(void)
 		_delay_ms(150);
 	}*/
 	
-	
+	/*
 	while(1){
 		
 		
@@ -128,7 +130,7 @@ int main(void)
 		msg.id = 100;
 		msg.length = 7;
 		
-		/*if (PINB & RIGHT_BUTTON) {
+		/ *if (PINB & RIGHT_BUTTON) {
 			count_right_button++;
 		}
 		
@@ -139,7 +141,7 @@ int main(void)
 		else{
 			switch_rb=0;
 		}
-		*/
+		* /
 		
 		uint8_t gameover = FALSE;
 		
@@ -154,13 +156,13 @@ int main(void)
 
 		
 		CAN_print_message(msg);
-		printf("\n\n");
+		//printf("\n\n");
 		
 		CAN_send_message(&msg);
 		
 		
 	_delay_ms(100);
-	}
+	}*/
 /*
 	can_message_t m2 = CAN_recieve_data();
 	printf("ID: %d\n", m2.id);

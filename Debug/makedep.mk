@@ -24,6 +24,8 @@ lib\SPI\SPI.c
 
 lib\SRAM\SRAM.c
 
+lib\TIMER\TIMER.c
+
 lib\UART\UART.c
 
 source\main.c

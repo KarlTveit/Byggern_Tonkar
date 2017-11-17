@@ -9,6 +9,7 @@
 #ifndef INCFILE1_H_
 #define INCFILE1_H_
 #include <avr/io.h>
+#include <util/delay.h>
 #define SRAM_START_ADDRESS 1800
 void SRAM_init(void);
 void SRAM_test(void);

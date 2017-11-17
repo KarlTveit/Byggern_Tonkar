@@ -44,7 +44,7 @@ void MENU_display_menu(menu_t menu, uint8_t curr_line) {
 menu_t* MENU_add_submenu(char* t, void(*func)(), /*uint8_t num,*/ menu_t* p) {
 	
 	
-	p->submenus[p->number_of_submenus] = malloc(sizeof(menu_t)*5);
+	p->submenus[p->number_of_submenus] = malloc(sizeof(menu_t)*4);
 	//menu_t* submenu = p->submenus[p->number_of_submenus];
 	
 	
@@ -52,7 +52,7 @@ menu_t* MENU_add_submenu(char* t, void(*func)(), /*uint8_t num,*/ menu_t* p) {
 	p->submenus[p->number_of_submenus]->number_of_submenus = 0;
 	p->submenus[p->number_of_submenus]->item = *func;
 	p->submenus[p->number_of_submenus]->parent = p;
-	p->submenus[p->number_of_submenus]->submenus = malloc(sizeof(menu_t)*5);
+	p->submenus[p->number_of_submenus]->submenus = malloc(sizeof(menu_t)*4);
 	
 	p->number_of_submenus++;
 	
@@ -234,31 +234,30 @@ void MENU_play_game(void){
 		CAN_print_message(receive_msg);
 		printf("\n\n");
 		
-		/*if (receive_msg.id == GAMEOVER_DATA_ID) {
+		if (receive_msg.id == GAMEOVER_DATA_ID) {
 			//printf("Game over message received");
 			gameover = TRUE;
+			//printf("QUIIIIIIIIIIIIIIIITTT");
 			uint8_t time = msg.data[TIMER_VAL];
 			OLED_clear_display();
 			OLED_print_string("GAME OVER");
 			_delay_ms(10000);
 			
-			MENU_update_highscores(time);
+			char* rank = MENU_update_highscores(time);
 			
-			if (MENU_get_hichscore_rank(time)) {
+			if (rank) {
 				OLED_clear_display();
-				/ *uint8_t rank = MENU_get_hichscore_rank(time);* /
+				/*uint8_t rank = MENU_get_hichscore_rank(time);*/
 				OLED_print_string("Congratulations! Your time reached the highscore list. Current rank: ");
-				OLED_print_char(MENU_get_hichscore_rank(time));
+				OLED_print_char(rank);
 				_delay_ms(3000);
 			}
-		}*/
+		}
 		
 	}
 	/*uint8_t diff = clock() - start;
 	uint8_t seconds = diff/CLOCKS_PER_SEC;
-	printf("seconds = %d\n\n", seconds);*/
-/*
-	OLED_clear_display();
+	printf("seconds = %d\n\n", seconds);	OLED_clear_display();
 	OLED_print_string("GAME OVER");
 	_delay_ms(3000);*/
 	
@@ -268,9 +267,9 @@ void MENU_play_game(void){
 
 
 void MENU_clear_highscores(void){
-	SRAM_write(HIGHSCORE_1_ADDRESS,0);
-	SRAM_write(HIGHSCORE_2_ADDRESS,0);
-	SRAM_write(HIGHSCORE_3_ADDRESS,0);
+	EEPROM_write(HIGHSCORE_1_ADDRESS,0);
+	EEPROM_write(HIGHSCORE_2_ADDRESS,0);
+	EEPROM_write(HIGHSCORE_3_ADDRESS,0);
 	
 }
 
@@ -278,9 +277,9 @@ void MENU_clear_highscores(void){
 
 void MENU_print_highscores(void) {
 	
-	highscores[0] = SRAM_read(HIGHSCORE_1_ADDRESS);
-	highscores[1] = SRAM_read(HIGHSCORE_2_ADDRESS);
-	highscores[2] = SRAM_read(HIGHSCORE_3_ADDRESS);
+	highscores[0] = EEPROM_read(HIGHSCORE_1_ADDRESS);
+	highscores[1] = EEPROM_read(HIGHSCORE_2_ADDRESS);
+	highscores[2] = EEPROM_read(HIGHSCORE_3_ADDRESS);
 	uint8_t page = 0;
 	OLED_clear_display();
 	OLED_print_header("HIGHSCORE LIST");
@@ -291,34 +290,35 @@ void MENU_print_highscores(void) {
 		// OLED_int_to_string(i+1)
 		//OLED_print_char(i+1);
 		//OLED_print_string(". ");
-		uint8_t score = OLED_int_to_string(highscores[i]);
-		printf("higscores: %c\n", score);
-		OLED_print_string(score);
+		//char score[HIGHSCORES_LENGTH] = OLED_int_to_string(highscores[i]);
+		//printf("higscores: %c\n", score);
+		OLED_print_string(OLED_int_to_string(highscores[i]));
 		OLED_goto_line(++page);
 	
-	} 
-	_delay_ms(7000);
+	}
+	while(JOY_getDirection()!=left){ 
+	}
 }
 
 uint8_t MENU_update_highscores(uint8_t time) { //Returns the position where you are on the higscore board
 	
-	uint8_t highscore_1 = SRAM_read(HIGHSCORE_1_ADDRESS);
-	uint8_t highscore_2 = SRAM_read(HIGHSCORE_2_ADDRESS);
-	uint8_t highscore_3 = SRAM_read(HIGHSCORE_3_ADDRESS);
+	uint8_t highscore_1 = EEPROM_read(HIGHSCORE_1_ADDRESS);
+	uint8_t highscore_2 = EEPROM_read(HIGHSCORE_2_ADDRESS);
+	uint8_t highscore_3 = EEPROM_read(HIGHSCORE_3_ADDRESS);
 	
 	
 	/*for(uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i + 1) {*/
 		
 		if (time > highscore_1){
-			SRAM_write(HIGHSCORE_1_ADDRESS,time);
+			EEPROM_write(HIGHSCORE_1_ADDRESS,time);
 			return 1;
 		}
 		else if(time > highscore_2){
-			SRAM_write(HIGHSCORE_2_ADDRESS,time);
+			EEPROM_write(HIGHSCORE_2_ADDRESS,time);
 			return 2;
 		}
 		else if(time > highscore_3){
-			SRAM_write(HIGHSCORE_3_ADDRESS,time);
+			EEPROM_write(HIGHSCORE_3_ADDRESS,time);
 			return 3;
 		}
 		return 0;
@@ -355,6 +355,24 @@ void MENU_normal_mode (void){
 	
 }
 
+void MENU_wireless_mode (void){
+	while(!quit){
+		can_message_t msg;
+		
+		msg.length = 1;
+		msg.id = WIRELESS_ID;
+		msg.data[0] = 1;
+		
+		CAN_send_message(&msg);
+	
+	}
+	
+	
+	
+	
+	
+}
+
 void MENU_create(){
 
 	//Initializing Main Menu
@@ -381,6 +399,7 @@ void MENU_create(){
 	//menu_t* clear_highscores_f = MENU_add_submenu("Cl", &MENU_clear_highscores, settings_m);
 	menu_t* scream_mode_f = MENU_add_submenu("Scream Mode", &MENU_scream_mode, settings_m);
 	menu_t* normal_mode_f = MENU_add_submenu("Normal Mode", &MENU_normal_mode, settings_m);
+	menu_t* wireless_mode_f = MENU_add_submenu("Wireless Mode", &MENU_wireless_mode, settings_m);
 	
 	/*menu_t* lillagenser_m = MENU_add_submenu("Lilla genser", NULL_PTR, tonja_m);
 	menu_t* ocd_m = MENU_add_submenu("ocd", NULL_PTR, tonja_m);
@@ -397,6 +416,7 @@ void MENU_create(){
 	
 	
 }
+
 
 
 void MENU_run_menu(void){

@@ -31,7 +31,7 @@ void OLED_print_char(char c);
 void OLED_print_capital_char(char c);
 void OLED_print_inverted_char(char c);
 void OLED_print_emphasized_inverted_char(char c);
-char* OLED_int_to_string(uint8_t integer);
+char* OLED_int_to_string(int integer);
 
 void OLED_set_brightness(uint8_t lvl);
 

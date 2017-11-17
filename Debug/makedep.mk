@@ -8,6 +8,8 @@ lib\CAN\CAN.c
 
 lib\CAN_DEFINES\CAN_DEFINES.c
 
+lib\EEPROM\EEPROM.c
+
 lib\MENU_ITEMS\MENU_ITEMS.c
 
 lib\JOY\JOY.c

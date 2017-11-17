@@ -15,9 +15,9 @@
 
 #define TRUE 1
 #define FALSE 0
-#define HIGHSCORE_1_ADDRESS 10
-#define HIGHSCORE_2_ADDRESS 20
-#define HIGHSCORE_3_ADDRESS 30 
+#define HIGHSCORE_1_ADDRESS 0x110
+#define HIGHSCORE_2_ADDRESS 0x220
+#define HIGHSCORE_3_ADDRESS 0x330 
 #define HIGHSCORES_LENGTH 3
 
 #include "stdint.h"
@@ -29,7 +29,7 @@
 #include "../SRAM/SRAM.h"
 /*#include "../GAME/GAME.h"*/
 #include "../CAN_DEFINES/CAN_DEFINES.h"
-
+#include "../EEPROM/EEPROM.h"
 struct menu_t{
 	char* title;
 	void (*item)();

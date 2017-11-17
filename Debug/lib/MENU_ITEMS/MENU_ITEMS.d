@@ -21,6 +21,7 @@ lib/MENU_ITEMS/MENU_ITEMS.d lib/MENU_ITEMS/MENU_ITEMS.o: \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
  ../lib/MENU_ITEMS/../MENU/../SRAM/SRAM.h \
  ../lib/MENU_ITEMS/../MENU/../CAN_DEFINES/CAN_DEFINES.h \
+ ../lib/MENU_ITEMS/../MENU/../EEPROM/EEPROM.h \
  ../lib/MENU_ITEMS/../CAN/CAN.h \
  ../lib/MENU_ITEMS/../CAN/../MCP2515/MCP2515.h \
  ../lib/MENU_ITEMS/../CAN/../MCP2515/../SPI/SPI.h \
@@ -75,6 +76,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 ../lib/MENU_ITEMS/../MENU/../SRAM/SRAM.h:
 
 ../lib/MENU_ITEMS/../MENU/../CAN_DEFINES/CAN_DEFINES.h:
+
+../lib/MENU_ITEMS/../MENU/../EEPROM/EEPROM.h:
 
 ../lib/MENU_ITEMS/../CAN/CAN.h:
 

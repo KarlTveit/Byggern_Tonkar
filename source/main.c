@@ -36,8 +36,7 @@
 #include "../lib/PWM/PWM.h"
 #include "../lib/CAN_DEFINES/CAN_DEFINES.h"
 #include "../lib/TIMER/TIMER.h"
-
-
+#include "../lib/EEPROM/EEPROM.h"
 
 
 
@@ -71,8 +70,10 @@ int main(void)
 	JOY_init();
 	_delay_ms(100);
 	OLED_init();
-
+		DDRB &= ~(1<<PB1);
+		DDRB &= ~(1<<PB2);
 	
+	//SRAM_test();
 	
 	OLED_clear_display();
 	OLED_goto_line(0);

@@ -40,6 +40,7 @@ SUBDIRS :=  \
 ../lib/MENU/ \
 ../lib/MENU_ITEMS \
 ../lib/CAN_DEFINES \
+../lib/EEPROM \
 ../lib/TIMER \
 ../lib/PWM \
 ../lib/OLED/ \
@@ -55,6 +56,7 @@ C_SRCS +=  \
 ../lib/ADC/ADC.c \
 ../lib/CAN/CAN.c \
 ../lib/CAN_DEFINES/CAN_DEFINES.c \
+../lib/EEPROM/EEPROM.c \
 ../lib/MENU_ITEMS/MENU_ITEMS.c \
 ../lib/JOY/JOY.c \
 ../lib/MCP2515/MCP2515.c \
@@ -78,6 +80,7 @@ OBJS +=  \
 lib/ADC/ADC.o \
 lib/CAN/CAN.o \
 lib/CAN_DEFINES/CAN_DEFINES.o \
+lib/EEPROM/EEPROM.o \
 lib/MENU_ITEMS/MENU_ITEMS.o \
 lib/JOY/JOY.o \
 lib/MCP2515/MCP2515.o \
@@ -94,6 +97,7 @@ OBJS_AS_ARGS +=  \
 lib/ADC/ADC.o \
 lib/CAN/CAN.o \
 lib/CAN_DEFINES/CAN_DEFINES.o \
+lib/EEPROM/EEPROM.o \
 lib/MENU_ITEMS/MENU_ITEMS.o \
 lib/JOY/JOY.o \
 lib/MCP2515/MCP2515.o \
@@ -110,6 +114,7 @@ C_DEPS +=  \
 lib/ADC/ADC.d \
 lib/CAN/CAN.d \
 lib/CAN_DEFINES/CAN_DEFINES.d \
+lib/EEPROM/EEPROM.d \
 lib/MENU_ITEMS/MENU_ITEMS.d \
 lib/JOY/JOY.d \
 lib/MCP2515/MCP2515.d \
@@ -126,6 +131,7 @@ C_DEPS_AS_ARGS +=  \
 lib/ADC/ADC.d \
 lib/CAN/CAN.d \
 lib/CAN_DEFINES/CAN_DEFINES.d \
+lib/EEPROM/EEPROM.d \
 lib/MENU_ITEMS/MENU_ITEMS.d \
 lib/JOY/JOY.d \
 lib/MCP2515/MCP2515.d \
@@ -181,6 +187,8 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
 lib/ADC/%.o: ../lib/ADC/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
@@ -196,6 +204,13 @@ lib/CAN/%.o: ../lib/CAN/%.c
 	
 
 lib/CAN_DEFINES/%.o: ../lib/CAN_DEFINES/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+lib/EEPROM/%.o: ../lib/EEPROM/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

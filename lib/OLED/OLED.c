@@ -193,8 +193,8 @@ void OLED_print_header(char c[]){
 }
 
 
-char* OLED_int_to_string(uint8_t integer){
-	uint8_t n;
+char* OLED_int_to_string(int integer){
+	int n;
 	if (integer == 0){
 		n = 1;
 	}

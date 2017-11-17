@@ -20,7 +20,7 @@
 
 #define GAME_ID 100
 #define GAMEOVER_DATA_ID 90
-
+#define WIRELESS_ID 80
 
 
 #endif /* CAN_DEFINES_H_ */

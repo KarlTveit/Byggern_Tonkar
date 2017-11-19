@@ -9,18 +9,20 @@
 #ifndef MENU_H_
 #define MENU_H_
 
+/*
 #define MAX_SUBMENUS 6
 #define NULL_PTR (void*)0
 #define CLOCKS_PER_SEC 1000000
 
 #define TRUE 1
 #define FALSE 0
-#define HIGHSCORE_1_ADDRESS 0x110
-#define HIGHSCORE_2_ADDRESS 0x220
-#define HIGHSCORE_3_ADDRESS 0x330 
-#define HIGHSCORES_LENGTH 3
+#define HIGHSCORE_1_ADDRESS 0x10
+#define HIGHSCORE_2_ADDRESS 0x30
+#define HIGHSCORE_3_ADDRESS 0x50 
+#define HIGHSCORES_LENGTH 3*/
 
 #include "stdint.h"
+#include "../DEFINITIONS.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>

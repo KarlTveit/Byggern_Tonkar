@@ -9,6 +9,7 @@
 #ifndef OLED_COMMANDS_H_
 #define OLED_COMMANDS_H_
 
+/*
 #define ASCII_OFFSET 32
 #define CAPITAL_LETTER_OFFSET 32
 #define DISPLAY_OFF 0xae
@@ -18,9 +19,9 @@
 #define SET_MEMORY_ADDRESSING_MODE 0x20
 #define SET_PAGE_ADDRESSING_MODE 0x02
 
-/*
+/ *
 #define SET_UPPER_COLUMN 
-#define SET_LOWER_COLUMN 0xf0*/
+#define SET_LOWER_COLUMN 0xf0* /
 
 
 #define PAGE0 0xb0
@@ -37,7 +38,7 @@
 
 //for OLED data
 #define CLEAR 0x00
-#define FILL 0xFF
+#define FILL 0xFF*/
 
 
 

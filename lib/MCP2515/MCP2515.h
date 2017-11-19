@@ -13,7 +13,7 @@ v1.00       2003/12/11  Initial release
 Copyright 2003 Kimberly Otten Software Consulting
 */
 
-
+#include "../DEFINITIONS.h"
 
 //Define MCP2515 register addresses
 

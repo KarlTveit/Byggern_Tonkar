@@ -10,7 +10,8 @@ lib/SPI/SPI.d lib/SPI/SPI.o: ../lib/SPI/SPI.c ../lib/SPI/SPI.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\lock.h \
- ../lib/SPI/../MCP2515/MCP2515.h ../lib/SPI/../MCP2515/../SPI/SPI.h
+ ../lib/SPI/../MCP2515/MCP2515.h ../lib/SPI/../MCP2515/../DEFINITIONS.h \
+ ../lib/SPI/../MCP2515/../SPI/SPI.h ../lib/SPI/../DEFINITIONS.h
 
 ../lib/SPI/SPI.h:
 
@@ -38,4 +39,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 ../lib/SPI/../MCP2515/MCP2515.h:
 
+../lib/SPI/../MCP2515/../DEFINITIONS.h:
+
 ../lib/SPI/../MCP2515/../SPI/SPI.h:
+
+../lib/SPI/../DEFINITIONS.h:

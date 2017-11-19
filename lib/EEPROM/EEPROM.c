@@ -6,7 +6,7 @@
  */ 
 #include "eeprom.h"
 
-void EEPROM_write(uint16_t address, uint8_t data){
+void EEPROM_write(uint8_t address, uint8_t data){
 	
 	while(EECR & (1<<EEWE)){}
 	
@@ -16,10 +16,10 @@ void EEPROM_write(uint16_t address, uint8_t data){
 	EECR |= (EEWE);			//start EEPROM write
 }
 
-char* EEPROM_read(uint16_t addresse){
+char* EEPROM_read(uint8_t address){
 	while (EECR & (1 << EEWE));
 	
-	EEAR = addresse;
+	EEAR = address;
 	EECR |= (1<<EERE);
 	
 	return EEDR;

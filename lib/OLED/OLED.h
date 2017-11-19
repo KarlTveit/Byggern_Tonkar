@@ -7,13 +7,16 @@
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 #include "OLED_COMMANDS.h"
+#include "../DEFINITIONS.h"
 
+/*
 #define ext_oled_cmd    ((volatile char*) 0x1000)
 #define ext_oled_data ((volatile char*) 0x1200)
 
 #define font5_size 5
 #define columns_in_line 128
 #define number_of_lines 8
+*/
 
 
 void OLED_test(void);

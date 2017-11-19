@@ -38,11 +38,8 @@ SUBDIRS :=  \
 ../lib/JOY/ \
 ../lib/MCP2515/ \
 ../lib/MENU/ \
-../lib/MENU_ITEMS \
 ../lib/CAN_DEFINES \
 ../lib/EEPROM \
-../lib/TIMER \
-../lib/PWM \
 ../lib/OLED/ \
 ../lib/SPI/ \
 ../lib/SRAM/ \
@@ -57,15 +54,12 @@ C_SRCS +=  \
 ../lib/CAN/CAN.c \
 ../lib/CAN_DEFINES/CAN_DEFINES.c \
 ../lib/EEPROM/EEPROM.c \
-../lib/MENU_ITEMS/MENU_ITEMS.c \
 ../lib/JOY/JOY.c \
 ../lib/MCP2515/MCP2515.c \
 ../lib/MENU/MENU.c \
 ../lib/OLED/OLED.c \
-../lib/PWM/PWM.c \
 ../lib/SPI/SPI.c \
 ../lib/SRAM/SRAM.c \
-../lib/TIMER/TIMER.c \
 ../lib/UART/UART.c \
 ../source/main.c
 
@@ -81,15 +75,12 @@ lib/ADC/ADC.o \
 lib/CAN/CAN.o \
 lib/CAN_DEFINES/CAN_DEFINES.o \
 lib/EEPROM/EEPROM.o \
-lib/MENU_ITEMS/MENU_ITEMS.o \
 lib/JOY/JOY.o \
 lib/MCP2515/MCP2515.o \
 lib/MENU/MENU.o \
 lib/OLED/OLED.o \
-lib/PWM/PWM.o \
 lib/SPI/SPI.o \
 lib/SRAM/SRAM.o \
-lib/TIMER/TIMER.o \
 lib/UART/UART.o \
 source/main.o
 
@@ -98,15 +89,12 @@ lib/ADC/ADC.o \
 lib/CAN/CAN.o \
 lib/CAN_DEFINES/CAN_DEFINES.o \
 lib/EEPROM/EEPROM.o \
-lib/MENU_ITEMS/MENU_ITEMS.o \
 lib/JOY/JOY.o \
 lib/MCP2515/MCP2515.o \
 lib/MENU/MENU.o \
 lib/OLED/OLED.o \
-lib/PWM/PWM.o \
 lib/SPI/SPI.o \
 lib/SRAM/SRAM.o \
-lib/TIMER/TIMER.o \
 lib/UART/UART.o \
 source/main.o
 
@@ -115,15 +103,12 @@ lib/ADC/ADC.d \
 lib/CAN/CAN.d \
 lib/CAN_DEFINES/CAN_DEFINES.d \
 lib/EEPROM/EEPROM.d \
-lib/MENU_ITEMS/MENU_ITEMS.d \
 lib/JOY/JOY.d \
 lib/MCP2515/MCP2515.d \
 lib/MENU/MENU.d \
 lib/OLED/OLED.d \
-lib/PWM/PWM.d \
 lib/SPI/SPI.d \
 lib/SRAM/SRAM.d \
-lib/TIMER/TIMER.d \
 lib/UART/UART.d \
 source/main.d
 
@@ -132,15 +117,12 @@ lib/ADC/ADC.d \
 lib/CAN/CAN.d \
 lib/CAN_DEFINES/CAN_DEFINES.d \
 lib/EEPROM/EEPROM.d \
-lib/MENU_ITEMS/MENU_ITEMS.d \
 lib/JOY/JOY.d \
 lib/MCP2515/MCP2515.d \
 lib/MENU/MENU.d \
 lib/OLED/OLED.d \
-lib/PWM/PWM.d \
 lib/SPI/SPI.d \
 lib/SRAM/SRAM.d \
-lib/TIMER/TIMER.d \
 lib/UART/UART.d \
 source/main.d
 
@@ -158,12 +140,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
-
-
-
-
 
 
 
@@ -217,13 +193,6 @@ lib/EEPROM/%.o: ../lib/EEPROM/%.c
 	@echo Finished building: $<
 	
 
-lib/MENU_ITEMS/%.o: ../lib/MENU_ITEMS/%.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 lib/JOY/%.o: ../lib/JOY/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
@@ -252,13 +221,6 @@ lib/OLED/%.o: ../lib/OLED/%.c
 	@echo Finished building: $<
 	
 
-lib/PWM/%.o: ../lib/PWM/%.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 lib/SPI/%.o: ../lib/SPI/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
@@ -267,13 +229,6 @@ lib/SPI/%.o: ../lib/SPI/%.c
 	
 
 lib/SRAM/%.o: ../lib/SRAM/%.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-lib/TIMER/%.o: ../lib/TIMER/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

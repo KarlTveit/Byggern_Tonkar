@@ -2,7 +2,7 @@
 #include "MENU.h"
 #include "../JOY/JOY.h"
 #include "../OLED/OLED.h"
-#include "../TIMER/TIMER.h"
+
 static menu_t main_menu;
 static menu_t current_menu;
 static uint8_t current_line = 0; // første linje er linjen under tittel

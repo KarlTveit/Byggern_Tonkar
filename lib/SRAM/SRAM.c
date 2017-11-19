@@ -11,9 +11,9 @@
 #include <avr/io.h>
 
 static uint8_t highscore_uno;
-#define HIGHSCORE_1_ADDRESS 0x110
-#define HIGHSCORE_2_ADDRESS 0x220
-#define HIGHSCORE_3_ADDRESS 0x330
+#define HIGHSCORE_1_ADDRESS 0x10
+#define HIGHSCORE_2_ADDRESS 0x20
+#define HIGHSCORE_3_ADDRESS 0x30
 
 void SRAM_init(void){
 	

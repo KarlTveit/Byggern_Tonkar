@@ -33,10 +33,9 @@
 #include "../lib/SPI/SPI.h"
 #include "../lib/MCP2515/MCP2515.h"
 #include "../lib/CAN/CAN.h"
-#include "../lib/PWM/PWM.h"
 #include "../lib/CAN_DEFINES/CAN_DEFINES.h"
-#include "../lib/TIMER/TIMER.h"
 #include "../lib/EEPROM/EEPROM.h"
+#include "../lib/DEFINITIONS.h"
 
 
 
@@ -75,10 +74,12 @@ int main(void)
 	
 	//SRAM_test();
 	
+	printf("hello");
+	//while(1){};
 	OLED_clear_display();
 	OLED_goto_line(0);
 	OLED_goto_column(0);
-
+	EEPROM_write(HIGHSCORE_1_ADDRESS,6);
 	MENU_create();
 	
 	MENU_run_menu();

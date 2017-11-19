@@ -8,14 +8,16 @@
 
 #ifndef SPI_H_
 #define SPI_H_
+/*
 #define DD_SS	DDB4
 #define DD_MOSI DDB5
 #define DD_MISO DDB6
 #define DD_SCK	DDB7
-#define DDR_SPI DDRB
+#define DDR_SPI DDRB*/
 
 #include <avr/io.h>
 #include "../MCP2515/MCP2515.h"
+#include "../DEFINITIONS.h"
 
 void SPI_init();
 void SPI_send(uint8_t message);

@@ -38,12 +38,13 @@ source/main.d source/main.o: ../source/main.c \
  ../source/../lib/MENU/../DEFINITIONS.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
  ../source/../lib/MENU/../SRAM/SRAM.h \
- ../source/../lib/MENU/../CAN_DEFINES/CAN_DEFINES.h \
  ../source/../lib/MENU/../EEPROM/EEPROM.h \
  ../source/../lib/MENU/../EEPROM/../DEFINITIONS.h \
- ../source/../lib/SPI/SPI.h ../source/../lib/MCP2515/MCP2515.h \
- ../source/../lib/CAN/CAN.h ../source/../lib/CAN_DEFINES/CAN_DEFINES.h \
- ../source/../lib/EEPROM/EEPROM.h ../source/../lib/DEFINITIONS.h
+ ../source/../lib/MENU/../TIMER/TIMER.h ../source/../lib/SPI/SPI.h \
+ ../source/../lib/MCP2515/MCP2515.h ../source/../lib/CAN/CAN.h \
+ ../source/../lib/CAN_DEFINES/CAN_DEFINES.h \
+ ../source/../lib/EEPROM/EEPROM.h ../source/../lib/DEFINITIONS.h \
+ ../source/../lib/TIMER/TIMER.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -133,11 +134,11 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 ../source/../lib/MENU/../SRAM/SRAM.h:
 
-../source/../lib/MENU/../CAN_DEFINES/CAN_DEFINES.h:
-
 ../source/../lib/MENU/../EEPROM/EEPROM.h:
 
 ../source/../lib/MENU/../EEPROM/../DEFINITIONS.h:
+
+../source/../lib/MENU/../TIMER/TIMER.h:
 
 ../source/../lib/SPI/SPI.h:
 
@@ -150,3 +151,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 ../source/../lib/EEPROM/EEPROM.h:
 
 ../source/../lib/DEFINITIONS.h:
+
+../source/../lib/TIMER/TIMER.h:

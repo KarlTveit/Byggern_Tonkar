@@ -11,31 +11,27 @@
 #include <stdint.h>
 #include <util/delay.h>
 
-uint8_t MCP2515_init() {
-	
-	uint8_t val;
+void MCP2515_init() {
 	
 	SPI_init();
 	
 	MCP2515_reset();
 	_delay_ms(1);
 	
-	MCP2515_bit_modify(MCP_CANINTE, 0b00000001, 0b00000001);
-	//test
+	//Test configuration mode after reset
+	uint8_t val;
 	val = MCP2515_read(MCP_CANSTAT);
 	if((val & MODE_MASK) != MODE_CONFIG) {
 		printf("MCP2515 in NOT in configuration mode after reset!\n");
-		return 1;
 	}
 	
-	return 0;
 }
 	
 	
 
 uint8_t MCP2515_read(uint8_t addr) {
 	
-	SPI_enable_chipselect();				//~CS written to low (enabled)
+	SPI_enable_chipselect();	//~CS written to low (enabled)
 	
 	SPI_send(MCP_READ);			//READ STATUS byte written to MCP2515
 	SPI_send(addr);
@@ -114,8 +110,12 @@ void MCP2515_bit_modify(uint8_t addr, uint8_t maskbyte, uint8_t databyte){
 
 void MCP2515_reset(){
 	
-	SPI_enable_chipselect();		//Pulling CS to low
+	//Pulling CS to low
+	SPI_enable_chipselect();
+			
 	SPI_send(MCP_RESET);
-	SPI_disable_chipselect();		//Pulling CS to high
+	
+	//Pulling CS to high
+	SPI_disable_chipselect();		
 	
 }

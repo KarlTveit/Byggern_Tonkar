@@ -200,6 +200,12 @@
     <Compile Include="lib\SRAM\SRAM.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\TIMER\TIMER.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\TIMER\TIMER.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\UART\UART.c">
       <SubType>compile</SubType>
     </Compile>
@@ -218,6 +224,7 @@
     <Folder Include="lib\MENU\" />
     <Folder Include="lib\CAN_DEFINES" />
     <Folder Include="lib\EEPROM" />
+    <Folder Include="lib\TIMER" />
     <Folder Include="lib\OLED\" />
     <Folder Include="lib\SPI\" />
     <Folder Include="lib\SRAM\" />

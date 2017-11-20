@@ -17,8 +17,8 @@ static int8_t corr_y = 0;
 
 void JOY_init(){
 	ADC_init();
-	//JOY_calibrate();
 	
+	//setting input pins
 	DDRB &= ~(1<<PB0);
 	
 	DDRB &= ~(1<<PB1);
@@ -31,30 +31,19 @@ void JOY_init(){
 
 void JOY_calibrate(){
 	
-	//printf("Calibrating... Do not touch the joystick\n");
-	//_delay_ms(10000);
 	corr_x = 0 - ADC_read(joyX) -127;
 	corr_y = 0 - ADC_read(joyY)- 127;
-	//printf("corr_x = %d\n", corr_x);
-	//printf("corr_y = %d\n", corr_y);
-	
 }
 
 
-int JOY_button(int button);
 
 JOY_position_t JOY_getPosition(void) {
 	JOY_position_t pos;
+	
+	//reading ADC and scaling to 8-bit
 	pos.X = (int)((ADC_read(joyX)*0.7874)) + corr_x - 100;
 	pos.Y = (int) ((ADC_read(joyY)*0.7874)) + corr_y - 100;
 	
-	/*can_message_t* message;
-	message->id = JOY_POS_ID;		// Jo lavere ID, desto høyere prioritering (lavfrekvente signaler burde ha høyere prioritering)
-	message->length = 2;
-	message->data[0] = ADC_read(joyX);
-	message->data[1] = ADC_read(joyY);
-	
-	CAN_send_message(message);*/
 	
 	return pos;
 }
@@ -63,10 +52,12 @@ JOY_position_t JOY_getPosition(void) {
 JOY_direction_t JOY_getDirection(void) {
 	
 	JOY_position_t pos = JOY_getPosition();
+	
+	//creating a fraction to determine if the joystick is mostly x or y oriented
 	double frac = pos.X/pos.Y;
 	
 	
-	//if within the "neutral square"
+	//creating an area near neutral position where small changes does not make a change in direction
 	if (abs(pos.X) <= 25 && abs(pos.Y) <= 25) {
 		return neutral;
 	}

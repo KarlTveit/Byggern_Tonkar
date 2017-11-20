@@ -11,7 +11,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "../DEFINITIONS.h"
-#define SRAM_START_ADDRESS 1800
+
 void SRAM_init(void);
 void SRAM_test(void);
 void SRAM_write(uint16_t address, char data);

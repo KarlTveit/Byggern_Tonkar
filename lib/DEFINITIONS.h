@@ -40,9 +40,9 @@
 
 
 //Highscore
-#define HIGHSCORE_1_ADDRESS		0x10
-#define HIGHSCORE_2_ADDRESS		0x30
-#define HIGHSCORE_3_ADDRESS		0x50
+#define HIGHSCORE_1_ADDRESS		10
+#define HIGHSCORE_2_ADDRESS		30
+#define HIGHSCORE_3_ADDRESS		50
 #define HIGHSCORES_LENGTH		3
 
 //JOY
@@ -126,8 +126,11 @@
 #define PWM_min		14
 #define PWM_max		30
 
+//Memory mapping
 
 
+#define ADC_START_ADDRESS 0x1400
+#define SRAM_START_ADDRESS 0x1800
 
 
 

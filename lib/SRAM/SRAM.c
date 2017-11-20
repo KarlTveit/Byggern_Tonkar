@@ -18,24 +18,17 @@ static uint8_t highscore_uno;
 void SRAM_init(void){
 	
 	#ifdef __AVR_ATmega162__
-	// enable external reset, s. --- i datablad atmega162
+	// enable external reset
 	MCUCR |= (1 << SRE);
 	
-	//SRAM_write(HIGHSCORE_1_ADDRESS,5);
-	//SRAM_write(HIGHSCORE_2_ADDRESS,6);
-	//SRAM_write(HIGHSCORE_3_ADDRESS,7);
-	//highscore_uno = SRAM_read(HIGHSCORE_1_ADDRESS);
-	//highscore_uno = SRAM_read(HIGHSCORE_1_ADDRESS);
-	//highscore_uno = SRAM_read(HIGHSCORE_1_ADDRESS);
-	//printf("Highscore_uno = %d\n",SRAM_read(HIGHSCORE_1_ADDRESS));
-	// mask pins, s. 32 i datablad atmega162
 	SFIOR |= (1 << XMM2);
 	#endif
 	
 }
 
 void SRAM_write(uint16_t address, char data){
-	if (address > 0x7FF){ // Out of SRAM domain
+	// Out of SRAM domain
+	if (address > 0x7FF){ 
 		//printf("HEIII");
 		return;
 	}
@@ -43,15 +36,14 @@ void SRAM_write(uint16_t address, char data){
 	else{
 		volatile char* external_ram = SRAM_START_ADDRESS;
 		external_ram[address] = data;
-		//printf("data = %d\n",data);
-		//return;
 		_delay_ms(10);
 	}
 }
 	
 char SRAM_read(uint16_t address){
 	
-	if (address > 0x7FF){ // Out of SRAM domain
+	// Out of SRAM domain
+	if (address > 0x7FF){ 
 		return '0';
 	}
 	

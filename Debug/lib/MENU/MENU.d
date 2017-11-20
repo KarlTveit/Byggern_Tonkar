@@ -19,8 +19,8 @@ lib/MENU/MENU.d lib/MENU/MENU.o: ../lib/MENU/MENU.c ../lib/MENU/MENU.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
  ../lib/MENU/../SRAM/SRAM.h ../lib/MENU/../SRAM/../DEFINITIONS.h \
- ../lib/MENU/../CAN_DEFINES/CAN_DEFINES.h ../lib/MENU/../EEPROM/EEPROM.h \
- ../lib/MENU/../EEPROM/../DEFINITIONS.h ../lib/MENU/../JOY/JOY.h \
+ ../lib/MENU/../EEPROM/EEPROM.h ../lib/MENU/../EEPROM/../DEFINITIONS.h \
+ ../lib/MENU/../TIMER/TIMER.h ../lib/MENU/../JOY/JOY.h \
  ../lib/MENU/../JOY/../ADC/ADC.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h \
@@ -82,11 +82,11 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 ../lib/MENU/../SRAM/../DEFINITIONS.h:
 
-../lib/MENU/../CAN_DEFINES/CAN_DEFINES.h:
-
 ../lib/MENU/../EEPROM/EEPROM.h:
 
 ../lib/MENU/../EEPROM/../DEFINITIONS.h:
+
+../lib/MENU/../TIMER/TIMER.h:
 
 ../lib/MENU/../JOY/JOY.h:
 

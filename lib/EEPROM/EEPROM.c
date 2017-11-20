@@ -8,18 +8,31 @@
 
 void EEPROM_write(uint8_t address, uint8_t data){
 	
-	while(EECR & (1<<EEWE)){}
+	//waiting until write enable is set
+	while(EECR & (1<<EEWE)){} 
+		
+	//setting address register
+	EEAR = address;	
+		
+	//setting data register
+	EEDR = data;
 	
-	EEAR = address;			//setting address register
-	EEDR = data;			//setting data register
-	EECR |= (1<<EEMWE);		
-	EECR |= (EEWE);			//start EEPROM write
+	//master wrte enable			
+	EECR |= (1<<EEMWE);			
+	
+	//start EEPROM write
+	EECR |= (1<<EEWE);
 }
+				
 
 char* EEPROM_read(uint8_t address){
-	while (EECR & (1 << EEWE));
+	
+	//waiting until read enable
+	while (EECR & (1 << EEWE)); 
 	
 	EEAR = address;
+	
+	//reading address				
 	EECR |= (1<<EERE);
 	
 	return EEDR;

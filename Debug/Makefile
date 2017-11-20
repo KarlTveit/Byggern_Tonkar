@@ -40,6 +40,7 @@ SUBDIRS :=  \
 ../lib/MENU/ \
 ../lib/CAN_DEFINES \
 ../lib/EEPROM \
+../lib/TIMER \
 ../lib/OLED/ \
 ../lib/SPI/ \
 ../lib/SRAM/ \
@@ -60,6 +61,7 @@ C_SRCS +=  \
 ../lib/OLED/OLED.c \
 ../lib/SPI/SPI.c \
 ../lib/SRAM/SRAM.c \
+../lib/TIMER/TIMER.c \
 ../lib/UART/UART.c \
 ../source/main.c
 
@@ -81,6 +83,7 @@ lib/MENU/MENU.o \
 lib/OLED/OLED.o \
 lib/SPI/SPI.o \
 lib/SRAM/SRAM.o \
+lib/TIMER/TIMER.o \
 lib/UART/UART.o \
 source/main.o
 
@@ -95,6 +98,7 @@ lib/MENU/MENU.o \
 lib/OLED/OLED.o \
 lib/SPI/SPI.o \
 lib/SRAM/SRAM.o \
+lib/TIMER/TIMER.o \
 lib/UART/UART.o \
 source/main.o
 
@@ -109,6 +113,7 @@ lib/MENU/MENU.d \
 lib/OLED/OLED.d \
 lib/SPI/SPI.d \
 lib/SRAM/SRAM.d \
+lib/TIMER/TIMER.d \
 lib/UART/UART.d \
 source/main.d
 
@@ -123,6 +128,7 @@ lib/MENU/MENU.d \
 lib/OLED/OLED.d \
 lib/SPI/SPI.d \
 lib/SRAM/SRAM.d \
+lib/TIMER/TIMER.d \
 lib/UART/UART.d \
 source/main.d
 
@@ -140,6 +146,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
@@ -229,6 +237,13 @@ lib/SPI/%.o: ../lib/SPI/%.c
 	
 
 lib/SRAM/%.o: ../lib/SRAM/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+lib/TIMER/%.o: ../lib/TIMER/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=4915200  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega162 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -2,7 +2,7 @@
 #include "MENU.h"
 #include "../JOY/JOY.h"
 #include "../OLED/OLED.h"
-
+//#include "../DEFINITIONS.h"
 static menu_t main_menu;
 static menu_t current_menu;
 static uint8_t current_line = 0; // første linje er linjen under tittel
@@ -13,17 +13,22 @@ static unsigned int quit = 0;	//bool
 static uint8_t highscores[HIGHSCORES_LENGTH] = {0};
 	
 
+//function for displaying the current menu
 void MENU_display_menu(menu_t menu, uint8_t curr_line) {
+	
+	//if the submenu contains a function, the menu does not get displayed and the menu goes back to the previous after running the function
 	if (menu.item != NULL_PTR) {
 		current_menu = *menu.parent;
 		MENU_back(menu);
 		return;
 	}
+	
 	uint8_t page = 0;
 	OLED_clear_display();
 	OLED_print_header(menu.title);
 	OLED_goto_line(++page);
-
+	
+	//display submenus on different lines
 	for (uint8_t i = 0; i < menu.number_of_submenus; i++) {
 		if (i == (curr_line) ) {
 			OLED_print_inverted_string(menu.submenus[i]->title);
@@ -40,20 +45,20 @@ void MENU_display_menu(menu_t menu, uint8_t curr_line) {
 	
 }
 
-
+//function for adding new submenus. The func pointer is a nullpointer for a submenu and a function pointer for a function
 menu_t* MENU_add_submenu(char* t, void(*func)(), /*uint8_t num,*/ menu_t* p) {
 	
-	
+	//allocating memory for the new submenu
 	p->submenus[p->number_of_submenus] = malloc(sizeof(menu_t)*4);
-	//menu_t* submenu = p->submenus[p->number_of_submenus];
-	
 	
 	p->submenus[p->number_of_submenus]->title = t;
 	p->submenus[p->number_of_submenus]->number_of_submenus = 0;
 	p->submenus[p->number_of_submenus]->item = *func;
 	p->submenus[p->number_of_submenus]->parent = p;
+	//allocating memory for the submenus of the new submenu
 	p->submenus[p->number_of_submenus]->submenus = malloc(sizeof(menu_t)*4);
 	
+	//increasing the number of submenus for the parent by one
 	p->number_of_submenus++;
 	
 	return p->submenus[p->number_of_submenus-1];
@@ -63,17 +68,19 @@ menu_t* MENU_add_submenu(char* t, void(*func)(), /*uint8_t num,*/ menu_t* p) {
 }
 
 
-
+//function for choosing the within a menu
 void MENU_choose(menu_t choice) {
 	
-	/*OLED_emphasized_inverted_string(choice.title);*/
-	_delay_ms(1000);
+	//adding a delay for a more natural feeling
+	_delay_ms(500);
 	
+	//if the choice is a menu
 	if (choice.item == NULL_PTR) {
 		if (choice.submenus[0] != NULL_PTR) {
 			MENU_display_menu(choice,0);
 		}
 	}
+	//if the coice is a function
 	else {
 		OLED_clear_display();
 		choice.item();
@@ -81,24 +88,12 @@ void MENU_choose(menu_t choice) {
 	
 }
 
-
+//function for returning to the previous menu
 void MENU_back(menu_t this) {
 	
 	if (this.parent != NULL_PTR) {
 		MENU_display_menu(*this.parent,0);
-	}/*
-	else {
-		OLED_clear_display();
-		
-		OLED_goto_line(4);
-		OLED_goto_column(70);
-		OLED_print_string("    Q U I T");
-	
-		OLED_print_rocket();
-		
-		
-	}*/
-	
+	}
 	
 }
 
@@ -108,7 +103,7 @@ menu_t MENU_get_current_menu(void) {
 }
 
 
-
+//function for printing an animation of a rocket
 void MENU_print_rocket() {
 	
 	
@@ -175,7 +170,7 @@ void MENU_print_rocket() {
 	*ext_oled_data = 0b00000001;
 	
 	JOY_direction_t dir = JOY_getDirection();
-	//Stjernestøv
+	//Ziggy Stardust
 	while (dir != left)  {
 		for(uint8_t j = 3; j <=5 ; j++) {
 			OLED_goto_line(j);
@@ -191,25 +186,29 @@ void MENU_print_rocket() {
 	
 }
 
+//function for playing the game with the P1000 multifunction board
 void MENU_play_game(void){
 	
+	//for reading IR-interrupt
+	can_message_t receive_msg;	
 	
-	can_message_t receive_msg;	//for reading IR-interrupt
 	
-	
-	
+	//initializing the message containing the controls
 	can_message_t msg;
 	msg.id = GAME_ID;
 	msg.length = 7;
 	
 	
-/*	clock_t start = clock(), diff;*/
 	
-	/*int a = 1;*/
+	
 	uint8_t gameover = FALSE;
 	
+	//starting the higscore timer
+	TIMER_start();
+	
+	//running until the IR is triggered
 	while(!gameover){
-		printf("---- In MENU_play_game ---- \n\n ");
+		
 		
 		msg.data[0] = ADC_read(joyX);
 		msg.data[1] = ADC_read(joyY);
@@ -225,43 +224,43 @@ void MENU_play_game(void){
 		CAN_send_message(&msg);
 	
 		
-		
-		//_delay_ms(5000);
-		
-		/*a = 0;*/
+		//Recieving an eventual message saying the IR is triggered
 		CAN_recieve_data(&receive_msg);
-		printf("RECEIVE MESSAGE \n");
+		
 		CAN_print_message(receive_msg);
-		printf("\n\n");
 		
 		if (receive_msg.id == GAMEOVER_DATA_ID) {
-			//printf("Game over message received");
+	
 			gameover = TRUE;
-			//printf("QUIIIIIIIIIIIIIIIITTT");
-			uint8_t time = msg.data[TIMER_VAL];
+			//stops the highscore timer
+			TIMER_stop();
+			
+			uint8_t rank = MENU_update_highscores(TIMER_get_time());
+			uint8_t time = TIMER_get_time();
 			OLED_clear_display();
 			OLED_print_string("GAME OVER");
+			OLED_goto_line(3);
+			OLED_print_string("Your score:");
+			OLED_goto_line(4);
+			OLED_print_string(OLED_int_to_string(time));
 			_delay_ms(10000);
 			
-			char* rank = MENU_update_highscores(time);
+			
 			
 			if (rank) {
 				OLED_clear_display();
-				/*uint8_t rank = MENU_get_hichscore_rank(time);*/
-				OLED_print_string("Congratulations! Your time reached the highscore list. Current rank: ");
+				OLED_print_string("Congratulations!");
+				OLED_goto_line(2);
+				OLED_print_string("Your time reached the highscore list.");
+				OLED_goto_line(3);
+				OLED_print_string("Current rank:");
+				OLED_goto_line(4);
 				OLED_print_char(rank);
 				_delay_ms(3000);
 			}
 		}
 		
 	}
-	/*uint8_t diff = clock() - start;
-	uint8_t seconds = diff/CLOCKS_PER_SEC;
-	printf("seconds = %d\n\n", seconds);	OLED_clear_display();
-	OLED_print_string("GAME OVER");
-	_delay_ms(3000);*/
-	
-	/*MENU_back(current_menu);*/	//necessary? test!
 	
 }
 
@@ -284,14 +283,9 @@ void MENU_print_highscores(void) {
 	OLED_clear_display();
 	OLED_print_header("HIGHSCORE LIST");
 	OLED_goto_line(++page);
-	/*char* numbers*/
 	
 	for (uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i+1) {
-		// OLED_int_to_string(i+1)
-		//OLED_print_char(i+1);
-		//OLED_print_string(". ");
-		//char score[HIGHSCORES_LENGTH] = OLED_int_to_string(highscores[i]);
-		//printf("higscores: %c\n", score);
+		
 		OLED_print_string(OLED_int_to_string(highscores[i]));
 		OLED_goto_line(++page);
 	
@@ -300,14 +294,12 @@ void MENU_print_highscores(void) {
 	}
 }
 
-uint8_t MENU_update_highscores(uint8_t time) { //Returns the position where you are on the higscore board
+//Returns the position where you are on the higscore board and writes to the EEPROM if you have made top three
+uint8_t MENU_update_highscores(uint8_t time) { 
 	
 	uint8_t highscore_1 = EEPROM_read(HIGHSCORE_1_ADDRESS);
 	uint8_t highscore_2 = EEPROM_read(HIGHSCORE_2_ADDRESS);
 	uint8_t highscore_3 = EEPROM_read(HIGHSCORE_3_ADDRESS);
-	
-	
-	/*for(uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i + 1) {*/
 		
 		if (time > highscore_1){
 			EEPROM_write(HIGHSCORE_1_ADDRESS,time);
@@ -323,38 +315,24 @@ uint8_t MENU_update_highscores(uint8_t time) { //Returns the position where you 
 		}
 		return 0;
 		
-		/*if (highscores[i] <= time) {
-			for (uint8_t j = HIGHSCORES_LENGTH-1; j > i; j = j-1) {
-				highscores[j] = highscores[j-1];  
-			}
-			
-			highscores[i] = time;
-		
-		}	
-	}*/
 }
 
-uint8_t MENU_get_hichscore_rank(uint8_t time) {
-	for (uint8_t i = 0; i < HIGHSCORES_LENGTH; i = i+1) {
-		if (highscores[i] == time) {
-			return i;
-		}
-	}
-	return 0;
-}
 
+//Enabling the microfone for controlling the solenoid with the sheer force of your voice
 void MENU_scream_mode (void){
 	DDRB |= (1<<PB3);
 	PORTB &= ~(1<<PB3);
 	
 }
 
+//standard mode using the button to control the solenoid
 void MENU_normal_mode (void){
 	DDRB |= (1<<PB3);
 	PORTB |=(1<<PB3);
 	
 }
 
+//enables the bluetooth device to send control data from the "Byggolini" app
 void MENU_wireless_mode (void){
 	while(!quit){
 		can_message_t msg;
@@ -380,69 +358,48 @@ void MENU_create(){
 	main_menu.number_of_submenus = 0;
 	main_menu.item = NULL_PTR;
 	main_menu.parent = NULL_PTR;
-	main_menu.submenus = malloc(sizeof(menu_t)*5);
+	main_menu.submenus = malloc(sizeof(menu_t)*4);
 	
 	
 
 	
 	
 	
-	//menu_t* game_f = MENU_add_submenu("Play game", &GAME_play, &main_menu);
-	menu_t* playgame_m = MENU_add_submenu("Play game", &MENU_play_game, &main_menu);
+	//adding submenus and functions
+	menu_t* playgame_f = MENU_add_submenu("Play game", &MENU_play_game, &main_menu);
 	menu_t* highscores_m = MENU_add_submenu("Highscores", &MENU_print_highscores, &main_menu);
 	menu_t* settings_m = MENU_add_submenu("Settings", NULL_PTR, &main_menu);
 	
-	
-	/*menu_t* tonja_m = MENU_add_submenu("Tonja", NULL_PTR, &main_menu);
-	menu_t* karl_m = MENU_add_submenu("Karl", NULL_PTR, &main_menu);*/
-	menu_t* rocket_f = MENU_add_submenu("Rocket", &MENU_print_rocket, &main_menu);
-	//menu_t* clear_highscores_f = MENU_add_submenu("Cl", &MENU_clear_highscores, settings_m);
 	menu_t* scream_mode_f = MENU_add_submenu("Scream Mode", &MENU_scream_mode, settings_m);
 	menu_t* normal_mode_f = MENU_add_submenu("Normal Mode", &MENU_normal_mode, settings_m);
 	menu_t* wireless_mode_f = MENU_add_submenu("Wireless Mode", &MENU_wireless_mode, settings_m);
 	
-	/*menu_t* lillagenser_m = MENU_add_submenu("Lilla genser", NULL_PTR, tonja_m);
-	menu_t* ocd_m = MENU_add_submenu("ocd", NULL_PTR, tonja_m);
-	menu_t* regnbue_m = MENU_add_submenu("Regnbue", NULL_PTR, tonja_m);*/
-	
-	/*menu_t* kul_m = MENU_add_submenu("Kul", NULL_PTR, karl_m);
-	menu_t* svartbukse_m = MENU_add_submenu("Svart bukse", NULL_PTR, lillagenser_m);*/
-	//printf("first submenu is %s\n", main_menu.submenus[0]->title);
-	
+	//setting the current menu to be the main menu
 	current_menu = main_menu;
-	
-	//main_menu.number_of_submenus = 3;
-	
 	
 	
 }
 
 
-
+//function for navigating the menus
 void MENU_run_menu(void){
 	
 	MENU_display_menu(main_menu,0);
 		while(!quit) {
 			
 			JOY_position_t pos = JOY_getPosition();
-			/*printf("pos.X =  %d\npos.Y =  %d\n\n", pos.X,pos.Y);
-			
-			printf("ADC->X =  %d\nADC->Y =  %d\n\n", ADC_read(joyX),ADC_read(joyY));*/
-			
 			
 			JOY_direction_t dir = JOY_getDirection();
 		
-			/*printf("dir: ");
-			JOY_getDirectionString();
-			printf("\n");*/
 			menu_t choice = *current_menu.submenus[current_line];		
 		
-		 
-		
+				//establishing the joystick commands
 				switch (dir) {	
-			
-					case up:
 					
+					
+					case up:
+						
+						//ensuring that the user returns the joystick to neutral position before making another choice
 						if (current_line > 0 && last_direction == neutral) {
 							current_line--;
 							MENU_display_menu(current_menu, current_line);
@@ -452,7 +409,7 @@ void MENU_run_menu(void){
 						break;
 				
 					case down:
-						//printf("menus %d\n",current_menu.number_of_submenus);
+	
 						if ((current_line < (current_menu.number_of_submenus-1)) && last_direction == neutral) {
 							current_line++;
 							printf("current line = %d\n", current_line);
@@ -462,7 +419,8 @@ void MENU_run_menu(void){
 						last_direction = dir;
 						_delay_ms(100);
 						break;
-			
+					
+					//enabling a choice to be made by moving the joystick right
 					case right:
 						if (last_direction == neutral) {
 							MENU_choose(choice);
@@ -475,15 +433,14 @@ void MENU_run_menu(void){
 						_delay_ms(100);
 						break;
 				
+					//enabling going to the previous menu by moving the joystick left
 					case left:	
 						if(last_direction == neutral){
 						MENU_back(current_menu);
 							if (current_menu.parent != NULL_PTR) {
 								current_menu = *current_menu.parent;
 							}
-							else {
-								//quit = 1;
-							}
+							
 							current_line = 0;
 						}
 					

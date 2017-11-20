@@ -36,6 +36,7 @@
 #include "../lib/CAN_DEFINES/CAN_DEFINES.h"
 #include "../lib/EEPROM/EEPROM.h"
 #include "../lib/DEFINITIONS.h"
+#include "../lib/TIMER/TIMER.h"
 
 
 
@@ -79,9 +80,42 @@ int main(void)
 	OLED_clear_display();
 	OLED_goto_line(0);
 	OLED_goto_column(0);
-	EEPROM_write(HIGHSCORE_1_ADDRESS,6);
-	MENU_create();
+	//cli();
+	/*EEPROM_write(HIGHSCORE_1_ADDRESS,0);
+	EEPROM_write(HIGHSCORE_2_ADDRESS,0);
+	EEPROM_write(HIGHSCORE_3_ADDRESS,0);*/
+	TIMER_init();
+	/*TIMER_start();
+	while(1) {
+		//TIMER_start();
+		_delay_ms(2000);
+		//TIMER_stop();
+		printf("TIME = %d\n",TIMER_get_time());
+		
+	}*/
 	
+	/*while(1){
+		printf("EEPROM HIGHSCORE 1 = %d\n", EEPROM_read(HIGHSCORE_1_ADDRESS));
+	}*/
+	
+	MENU_create();
+
+/*
+
+	can_message_t node_2_msg;
+	
+	while(1) {
+		CAN_recieve_data(&node_2_msg);
+		if (node_2_msg.id == GAMEOVER_DATA_ID) {
+			CAN_print_message(node_2_msg);
+		}
+		_delay_ms(10);
+	}*/
+	
+	
+	
+
+
 	MENU_run_menu();
 	//MENU_run_menu();
 

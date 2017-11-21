@@ -16,7 +16,7 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
-
+#include "../DEFINITIONS.h"
 #include "../UART/UART.h"
 
 

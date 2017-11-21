@@ -1,6 +1,7 @@
 lib/MENU/MENU.d lib/MENU/MENU.o: ../lib/MENU/MENU.c ../lib/MENU/MENU.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdint.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdint.h \
+ ../lib/MENU/../DEFINITIONS.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -17,24 +18,33 @@ lib/MENU/MENU.d lib/MENU/MENU.o: ../lib/MENU/MENU.c ../lib/MENU/MENU.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\sleep.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
- ../lib/MENU/../CAN_DEFINES/CAN_DEFINES.h ../lib/MENU/../JOY/JOY.h \
- ../lib/MENU/../JOY/../ADC/ADC.h \
+ ../lib/MENU/../SRAM/SRAM.h ../lib/MENU/../SRAM/../DEFINITIONS.h \
+ ../lib/MENU/../EEPROM/EEPROM.h ../lib/MENU/../EEPROM/../DEFINITIONS.h \
+ ../lib/MENU/../TIMER/TIMER.h ../lib/MENU/../CAN/CAN.h \
+ ../lib/MENU/../CAN/../DEFINITIONS.h \
+ ../lib/MENU/../CAN/../MCP2515/MCP2515.h \
+ ../lib/MENU/../CAN/../MCP2515/../DEFINITIONS.h \
+ ../lib/MENU/../CAN/../MCP2515/../SPI/SPI.h \
+ ../lib/MENU/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h \
+ ../lib/MENU/../CAN/../MCP2515/../SPI/../DEFINITIONS.h \
+ ../lib/MENU/../JOY/JOY.h ../lib/MENU/../JOY/../ADC/ADC.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h \
+ ../lib/MENU/../JOY/../ADC/../DEFINITIONS.h \
  ../lib/MENU/../JOY/../ADC/../UART/UART.h ../lib/MENU/../JOY/../CAN/CAN.h \
- ../lib/MENU/../JOY/../CAN/../MCP2515/MCP2515.h \
- ../lib/MENU/../JOY/../CAN/../MCP2515/../SPI/SPI.h \
- ../lib/MENU/../JOY/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h \
+ ../lib/MENU/../JOY/../DEFINITIONS.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h \
  ../lib/MENU/../OLED/OLED.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../lib/MENU/../OLED/OLED_COMMANDS.h
+ ../lib/MENU/../OLED/OLED_COMMANDS.h ../lib/MENU/../OLED/../DEFINITIONS.h
 
 ../lib/MENU/MENU.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdint.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdint.h:
+
+../lib/MENU/../DEFINITIONS.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -68,7 +78,29 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h:
 
-../lib/MENU/../CAN_DEFINES/CAN_DEFINES.h:
+../lib/MENU/../SRAM/SRAM.h:
+
+../lib/MENU/../SRAM/../DEFINITIONS.h:
+
+../lib/MENU/../EEPROM/EEPROM.h:
+
+../lib/MENU/../EEPROM/../DEFINITIONS.h:
+
+../lib/MENU/../TIMER/TIMER.h:
+
+../lib/MENU/../CAN/CAN.h:
+
+../lib/MENU/../CAN/../DEFINITIONS.h:
+
+../lib/MENU/../CAN/../MCP2515/MCP2515.h:
+
+../lib/MENU/../CAN/../MCP2515/../DEFINITIONS.h:
+
+../lib/MENU/../CAN/../MCP2515/../SPI/SPI.h:
+
+../lib/MENU/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h:
+
+../lib/MENU/../CAN/../MCP2515/../SPI/../DEFINITIONS.h:
 
 ../lib/MENU/../JOY/JOY.h:
 
@@ -78,15 +110,13 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h:
 
+../lib/MENU/../JOY/../ADC/../DEFINITIONS.h:
+
 ../lib/MENU/../JOY/../ADC/../UART/UART.h:
 
 ../lib/MENU/../JOY/../CAN/CAN.h:
 
-../lib/MENU/../JOY/../CAN/../MCP2515/MCP2515.h:
-
-../lib/MENU/../JOY/../CAN/../MCP2515/../SPI/SPI.h:
-
-../lib/MENU/../JOY/../CAN/../MCP2515/../SPI/../MCP2515/MCP2515.h:
+../lib/MENU/../JOY/../DEFINITIONS.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\string.h:
 
@@ -95,3 +125,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
 
 ../lib/MENU/../OLED/OLED_COMMANDS.h:
+
+../lib/MENU/../OLED/../DEFINITIONS.h:

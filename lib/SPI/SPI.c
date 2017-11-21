@@ -33,8 +33,7 @@ void SPI_init() {
 	SPCR |= (1<<SPR0);						//SCK frequency = F_OSC/16 
 	SPCR &= ~(1<<SPR1);
 	
-	//SPI_disable_chipselect();
-	//printf("SPI_init complete \n");
+
 	
 	
 }
@@ -43,31 +42,34 @@ void SPI_init() {
 
 void SPI_send(uint8_t message) {
 	
-	SPDR = message;							//Start transmission
-	//printf("SPI_send \n");
-	
-	while (!(SPSR & (1<<SPIF))) {}			//Wait until transmission is complete
+	//Start transmission
+	SPDR = message;							
+
+	//Wait until transmission is complete
+	while (!(SPSR & (1<<SPIF))) {}			
 }
 
 
 
 uint8_t SPI_read() {
 	
-	SPI_send(0x01);							//Transmisson of dummy byte, to be able to read from slave
+	//Transmisson of dummy byte, to be able to read from slave
+	SPI_send(0x01);
+								
+	//Wait until transmission is complete
+	while (!(SPSR & (1<<SPIF))) {}			
 	
-	while (!(SPSR & (1<<SPIF))) {}			//Wait until transmission is complete
-	
-	return SPDR;							//All messages will end with the dummy byte????
+	return SPDR;							
 	
 }
 
 
-void SPI_enable_chipselect(void) { // 1 --> enable
+void SPI_enable_chipselect(void) { 
 	PORTB &= ~(1<<PB4);
 }
 
 
 
-void SPI_disable_chipselect(void) { // 1 --> enable
+void SPI_disable_chipselect(void) { 
 	PORTB |= (1<<PB4);
 }

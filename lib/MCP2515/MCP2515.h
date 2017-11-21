@@ -13,7 +13,7 @@ v1.00       2003/12/11  Initial release
 Copyright 2003 Kimberly Otten Software Consulting
 */
 
-
+#include "../DEFINITIONS.h"
 
 //Define MCP2515 register addresses
 
@@ -89,6 +89,13 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define	MCP_ABTF		0x06
 #define MCP_MLOA		0x05
 #define MCP_TXERR		0x04
+
+//TX0CTRL Register Values
+#define TX0_REQ			0x08
+
+//RX0CTRL Register Values
+#define RXM_MODE_MASK	0x64
+#define DLC_MASK		0x07
 
 // Define SPI Instruction Set
 
@@ -174,7 +181,7 @@ Copyright 2003 Kimberly Otten Software Consulting
 #include <stdint.h>
 #include "../SPI/SPI.h"
 
-uint8_t MCP2515_init();
+void MCP2515_init();
 uint8_t MCP2515_read(uint8_t addr);
 uint8_t MCP2515_write(uint8_t val, uint8_t addr);
 void MCP2515_request_to_send(uint8_t buffer);

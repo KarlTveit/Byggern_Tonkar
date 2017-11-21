@@ -8,10 +8,13 @@
 
 #ifndef INCFILE1_H_
 #define INCFILE1_H_
+#include <avr/io.h>
+#include <util/delay.h>
+#include "../DEFINITIONS.h"
 
 void SRAM_init(void);
 void SRAM_test(void);
-
-
+void SRAM_write(uint16_t address, char data);
+char SRAM_read(uint16_t address);
 
 #endif /* INCFILE1_H_ */

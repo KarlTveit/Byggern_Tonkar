@@ -9,16 +9,19 @@
 #ifndef JOYSTICK_H_
 #define JOYSTICK_H_
 
+/*
 
 #define RIGHT_BUTTON	0b00000001
 #define LEFT_BUTTON		0b00000010
-#define JOY_BUTTON		0b00000100
+#define JOY_BUTTON		0b00000100*/
 
 
 #include "../ADC/ADC.h"
 #include "../CAN/CAN.h"
+#include "../DEFINITIONS.h"
 #include <string.h>
 #include <util/delay.h>
+
 
 typedef struct{
 	int X;

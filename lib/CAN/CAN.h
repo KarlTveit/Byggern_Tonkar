@@ -8,33 +8,22 @@
 
 #ifndef CAN_H_
 #define CAN_H_
-
+#include "../DEFINITIONS.h"
 #include "../MCP2515/MCP2515.h"
 #include <avr/io.h>
-//#include "../OLED/fonts.h"
-
-//CAN ID's
-
-#define JOY_POS_ID 100
-#define RIGHT_SLIDER_POS_ID 90
-
 
 typedef struct {
-	unsigned int id;
+	uint16_t id;
 	uint8_t length;
 	uint8_t data[8];
 }can_message_t;
 
 
-
 void CAN_init(void);
 void CAN_send_message(can_message_t *message);
-void CAN_error();
-void CAN_transmit_complete();
 void CAN_recieve_data(can_message_t *message);
-void CAN_int_vect();
 void CAN_print_message(can_message_t message);
-
+can_message_t* CAN_create_message(can_message_t* message, uint16_t id, uint8_t length, uint8_t data[]);
 
 
 #endif /* CAN_H_ */

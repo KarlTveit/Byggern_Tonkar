@@ -10,6 +10,7 @@
 #define CAN_DEFINES_H_
 
 
+/*
 #define SERVO_REF 0
 #define MOTOR_REF 2
 #define SOLENOID_ENABLE 3
@@ -20,7 +21,7 @@
 
 #define GAME_ID 100
 #define GAMEOVER_DATA_ID 90
-
+#define WIRELESS_ID 80*/
 
 
 #endif /* CAN_DEFINES_H_ */

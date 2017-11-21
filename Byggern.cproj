@@ -116,6 +116,7 @@
         <avrgcc.compiler.symbols.DefSymbols>
           <ListValues>
             <Value>DEBUG</Value>
+            <Value>F_CPU=4915200</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -151,10 +152,13 @@
     <Compile Include="lib\CAN_DEFINES\CAN_DEFINES.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\MENU_ITEMS\MENU_ITEMS.c">
+    <Compile Include="lib\DEFINITIONS.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\MENU_ITEMS\MENU_ITEMS.h">
+    <Compile Include="lib\EEPROM\EEPROM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\EEPROM\EEPROM.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\JOY\JOY.c">
@@ -184,12 +188,6 @@
     <Compile Include="lib\OLED\OLED.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\PWM\PWM.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\PWM\PWM.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="lib\SPI\SPI.c">
       <SubType>compile</SubType>
     </Compile>
@@ -200,6 +198,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\SRAM\SRAM.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\TIMER\TIMER.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\TIMER\TIMER.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\UART\UART.c">
@@ -218,9 +222,9 @@
     <Folder Include="lib\JOY\" />
     <Folder Include="lib\MCP2515\" />
     <Folder Include="lib\MENU\" />
-    <Folder Include="lib\MENU_ITEMS" />
     <Folder Include="lib\CAN_DEFINES" />
-    <Folder Include="lib\PWM" />
+    <Folder Include="lib\EEPROM" />
+    <Folder Include="lib\TIMER" />
     <Folder Include="lib\OLED\" />
     <Folder Include="lib\SPI\" />
     <Folder Include="lib\SRAM\" />

@@ -7,15 +7,36 @@
 #include "CAN.h"
 #include <util/delay.h>
 #include <stdio.h>
+#include <avr/interrupt.h>
 
 void CAN_init(void){
 	
 	MCP2515_init();
-	MCP2515_bit_modify(MCP_RXB0CTRL,0b01100100, 0b01100000);
-	MCP2515_bit_modify(MCP_CANCTRL,MODE_MASK, MODE_NORMAL);
-	//MCP2515_bit_modify(MCP_CANINTE,0b00000001,0xff);
-	MCP2515_bit_modify(MCP_RXB0CTRL,0b01100000,0xff);
+	//Receive buffer operating mode: receive any message
+	MCP2515_bit_modify(MCP_RXB0CTRL,RXM_MODE_MASK, MODE_LISTENONLY);
 	
+	//Setting normal mode
+	MCP2515_bit_modify(MCP_CANCTRL,MODE_MASK, MODE_NORMAL);
+	
+/*
+	//Enable Transmit Complete Interrupt
+	MCP2515_bit_modify(MCP_CANINTE,TX0_IE_MASK,ENABLE);*/
+	
+	//Receive Buffer Control: Receive Any
+	MCP2515_bit_modify(MCP_RXB0CTRL,RXB0_CTRL_MASK,RECEIVE_ANY);
+	
+	
+	
+/*
+	//Interrupt 0 Sense Control: Low Level
+	MCUCR &= ~(1 << ISC10);
+	MCUCR |= (1 << ISC11); 
+	
+	//Enable External Interrupt 0
+	GICR |= (1 << INT1);
+	
+	//Global Interrupt Enable
+	sei();*/
 }
 
 
@@ -41,6 +62,8 @@ void CAN_send_message(can_message_t *message){
 }
 
 
+
+
 void CAN_recieve_data(can_message_t *message){
 	
 	
@@ -63,6 +86,7 @@ void CAN_recieve_data(can_message_t *message){
 	}
 	
 }
+
 
 
 

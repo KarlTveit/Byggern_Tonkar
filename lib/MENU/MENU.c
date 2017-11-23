@@ -10,6 +10,19 @@ static JOY_direction_t last_direction = neutral;
 /*static unsigned int quit = 0;*/
 static uint8_t highscores[HIGHSCORES_LENGTH] = {0};
 uint8_t gameover = 0;	
+//uint8_t transmit_complete_flag = FALSE;
+
+/*
+//CAN Interrupt
+ISR(INT1_vect) {
+	
+	transmit_complete_flag = TRUE;
+	printf("Hei, nå er jeg i interruptet yey\n");
+	/ *MCP2515_bit_modify(MCP_CANINTF,(1<<MCP_TX0IF),ENABLE);* /
+}
+*/
+
+
 
 //Displaying current menu
 void MENU_display_menu(menu_t menu, uint8_t curr_line) {
@@ -103,6 +116,9 @@ menu_t MENU_get_current_menu(void) {
 
 //Printing an animation of a rocket
 void MENU_print_rocket() {
+	
+	printf(" BACK AT INIT\n");
+	
 	OLED_print_header("byggolini");
 	 OLED_goto_line(7);
 	 OLED_print_string("Right to start");
@@ -171,17 +187,18 @@ void MENU_print_rocket() {
 	
 	//Ziggy Stardust
 	while (dir != right)  {
+		dir = JOY_getDirection();
 		for(uint8_t j = 3; j <= 5 ; j++) {
 			OLED_goto_line(j);
 			for(uint8_t i = 0; i< 50; i++) {
 				*ext_oled_data = rand() % 255;
 			}
 		}
-		_delay_ms(500);
-		dir = JOY_getDirection();
+		
+		
 		
 	}
-	
+	_delay_ms(500);
 }
 
 //Playing the game with the P1000 multifunction board
@@ -200,20 +217,33 @@ void MENU_play_game(void){
 	//Starting the higscore timer
 	TIMER_start();
 	
+	//transmit_complete_flag = TRUE;
+	
+	uint8_t joy_x = ADC_read(joyX);;
+	uint8_t slider_pos = ADC_read(right_slider);
+	uint8_t button = PINB & RIGHT_BUTTON;
+	
 	//Running until the IR is triggered
 	while(!gameover){
 		
+		if (abs(joy_x-ADC_read(joyX)) > 5 || abs(slider_pos - ADC_read(right_slider)) > 3 || PINB & RIGHT_BUTTON != button || control_msg.data[3] == 1) {
+			control_msg.data[0] = ADC_read(joyX);
+			control_msg.data[1] = ADC_read(joyY);
+			control_msg.data[2] = ADC_read(right_slider);
+			control_msg.data[3] = PINB & RIGHT_BUTTON;
+			control_msg.data[4] = PINB & LEFT_BUTTON;
+			control_msg.data[5] = PINB & JOY_BUTTON;
+			control_msg.data[7] = gameover ? 0:1;
+			
+			joy_x = ADC_read(joyX);
+			slider_pos = ADC_read(right_slider);
+			button = control_msg.data[3];
+			CAN_send_message(&control_msg);
+			printf("Sending message \n ");
 		
-		control_msg.data[0] = ADC_read(joyX);
-		control_msg.data[1] = ADC_read(joyY);
-		control_msg.data[2] = ADC_read(right_slider);
-		control_msg.data[3] = PINB & RIGHT_BUTTON;
-		control_msg.data[4] = PINB & LEFT_BUTTON;
-		control_msg.data[5] = PINB & JOY_BUTTON;
-		control_msg.data[7] = gameover ? 0:1;
+			
+		}
 		
-		CAN_send_message(&control_msg);
-	
 		
 		//Checking if IR is triggered
 		CAN_recieve_data(&receive_msg);
@@ -226,7 +256,7 @@ void MENU_play_game(void){
 		}
 	
 	}
-	
+	gameover = FALSE;
 }
 
 void MENU_clear_highscores(void){
@@ -274,7 +304,6 @@ void MENU_gameover(void){
 		_delay_ms(7000);
 		MENU_display_menu(main_menu,0);
 	}
-	gameover = FALSE;
 }
 
 
@@ -361,7 +390,7 @@ void MENU_wireless_mode (void){
 		}
 		
 	}
-	
+	gameover = FALSE;
 }
 
 void MENU_create(){
@@ -394,6 +423,7 @@ void MENU_create(){
 void MENU_run_menu(void){
 	
 	MENU_display_menu(main_menu,0);
+	uint8_t rocket = TRUE;
 	
 	while(1) {
 			
@@ -433,15 +463,21 @@ void MENU_run_menu(void){
 					
 				//Enabling a choice to be made by moving the joystick right
 				case right:
-					if (last_direction == neutral) {
-						MENU_choose(choice);
-						current_menu = choice;
-						current_line = 0;
-						MENU_display_menu(current_menu, current_line);
+					if (rocket == TRUE) {
 						
+						rocket = FALSE;
 					}
-					last_direction = dir;
-					
+					else {
+				
+						if (last_direction == neutral) {
+							MENU_choose(choice);
+							current_menu = choice;
+							current_line = 0;
+							MENU_display_menu(current_menu, current_line);
+						
+						}
+						last_direction = dir;
+					}
 					_delay_ms(100);
 					break;
 				

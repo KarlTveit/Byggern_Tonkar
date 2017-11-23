@@ -26,7 +26,11 @@
 #define GAMEOVER_DATA_ID	90
 #define WIRELESS_ID			80
 
+//CAN masks
+#define TX0_IE_MASK			0b00000100
+#define	RXB0_CTRL_MASK		0b01100000
 
+#define RECEIVE_ANY			0b01100000
 
 //Game message indexes
 #define SERVO_REF			0
@@ -132,6 +136,6 @@
 #define ADC_START_ADDRESS 0x1400
 #define SRAM_START_ADDRESS 0x1800
 
-
+#define ENABLE	0xFF
 
 #endif /* DEFINITIONS_H_ */
